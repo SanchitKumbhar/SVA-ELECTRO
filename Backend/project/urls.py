@@ -22,4 +22,8 @@ urlpatterns = [
     path('', include('CustomUserModelApp.urls')),
     path('', include('products.urls')),
 
+    # rest framework
+    path('api-auth/', include('rest_framework.urls'))
+
+
 ]
