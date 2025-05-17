@@ -1,5 +1,7 @@
-// simulated code : 
-
+console.log('DOMContentLoaded event triggered');
+console.log('Stored product:', storedProduct);
+console.log('Parsed product:', product);
+console.log('Product HTML:', productHTML);// simulated code : 
 document.addEventListener('DOMContentLoaded', () => {
   const productContentDiv = document.getElementById('product-content');
   const storedProduct = localStorage.getItem('selectedProduct');
@@ -13,10 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const productHTML = `
     <div class="product-container">
-      <img src="${product.image}" alt="${product.title}">
+      <img src="${product.productimg}" alt="${product.productname}">
       <div class="product-details">
-        <h2>${product.title}</h2>
-        <p class="price">Contact for Pricing</p>
+        <h2>${product.productname}</h2>
+        <p><strong>Category:</strong> ${product.productcategory}</p>
+        <p><strong>Stock Available:</strong> ${product.stock}</p>
+        <p><strong>Launch Date:</strong> ${product.launch}</p>
+        <p class="price">₹${product.cost.toLocaleString()}</p>
         <p>${product.description}</p>
       </div>
     </div>
@@ -30,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <label for="phone">Phone:</label>
         <input type="tel" id="phone" required>
         <label for="message">Message:</label>
-        <textarea id="message" rows="4" placeholder="I want to order ${product.title}..."></textarea>
+        <textarea id="message" rows="4" placeholder="I want to order ${product.productname}..."></textarea>
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -38,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   productContentDiv.innerHTML = productHTML;
 });
-
 
 
 // // getting form server api code
