@@ -1,0 +1,10 @@
+componentType: service
+name: django-api
+source:
+  path: .
+  context: .
+build:
+  command: ""
+run:
+  command: python manage.py runserver 0.0.0.0:8000
+  port: 8000
