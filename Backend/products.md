@@ -30,7 +30,7 @@ Base URL: `http://127.0.0.1:8000/api/products/`
 
 ```json
 [
-  {
+  {~
     "id": 1,
     "productname": "Electric Bus Model X",
     "productcategory": "1",

@@ -4,8 +4,11 @@ from .serializers import ProductModelSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from products.models import Product
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+
 
 class Productview(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset=Product.objects.all()
     serializer_class=ProductModelSerializer
     parser_classes = [MultiPartParser, FormParser]  
