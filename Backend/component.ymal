@@ -1,5 +1,5 @@
 componentType: service
-name: django-api
+name: Backend
 source:
   path: .
   context: .
