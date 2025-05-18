@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+import datetime
 # Create your models here.
 
 class Product(models.Model):
@@ -12,10 +13,10 @@ class Product(models.Model):
     productname=models.CharField(max_length=100)
     productcategory=models.CharField(max_length=4,choices=PRODUCT_CATEGORY,default="1")
     stock=models.IntegerField(default=0)
-    productimg=models.ImageField(upload_to='productimg')
+    productimg=models.ImageField(upload_to='static/productimg')
     cost=models.IntegerField()
     description=models.TextField()
-    launch=models.DateField(null=True)
+    launch=models.DateField(default=datetime.date.today)
 
 class ProductAppointment(models.Model):
     SLOT_CHOICES=[

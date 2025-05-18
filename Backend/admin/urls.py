@@ -1,8 +1,10 @@
-# from django.urls import path
-# from rest_framework.routers import DefaultRouter
-# from .views import YourModelViewSet  # Replace with your viewset
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import Productview  # Import your viewset explicitly
 
-# router = DefaultRouter()
-# router.register(r'yourmodel', YourModelViewSet, basename='yourmodel')
+router = DefaultRouter()
+router.register(r'products', Productview, basename='create-product')  
 
-# urlpatterns = router.urls
+urlpatterns = [
+    path('', include(router.urls)),
+]
