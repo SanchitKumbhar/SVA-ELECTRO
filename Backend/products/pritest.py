@@ -1,15 +1,16 @@
 import requests
+import json
 
-url = "https://sanchitkumbhar.pythonanywhere.com/api/products"
+url = "https://sanchitkumbhar.pythonanywhere.com/api/token/"
 
-payload = {'stock': '1000'}
-files=[
-
-]
+payload = json.dumps({
+  "email": "tester@eg.com",
+  "password": 1234
+})
 headers = {
-  'Content-Type': 'multipart/form-data'
+  'Content-Type': 'application/json'
 }
 
-response = requests.request("GET", url, headers=headers, data=payload, files=files)
+response = requests.request("POST", url, headers=headers, data=payload)
 
 print(response.text)
