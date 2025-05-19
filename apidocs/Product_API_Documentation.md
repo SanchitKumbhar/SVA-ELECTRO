@@ -1,7 +1,7 @@
 
 # Product API Documentation
 
-Base URL: `http://127.0.0.1:8000/api/products/`
+Base URL: `https://sanchitkumbhar.pythonanywhere.com/api/products/`
 
 ---
 
