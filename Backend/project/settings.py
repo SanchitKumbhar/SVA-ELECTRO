@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'CustomUserModelApp',  # Ensure this matches the app directory name
     'products',
+    'order',
     'rest_framework',
     'rest_framework_simplejwt'
 
