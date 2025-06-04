@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'CustomUserModelApp',  # Ensure this matches the app directory name
     'products',
     'order',
+    "productsapi",
     'rest_framework',
     'rest_framework_simplejwt'
 
