@@ -1,0 +1,307 @@
+/* =============================
+   Global Reset & Base Styles
+============================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f4f9ff;
+  color: #1e3a5f;
+  scroll-behavior: smooth;
+}
+
+/* =============================
+   Header & Navigation
+============================= */
+header {
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  color: #0074d9;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+nav a {
+  color: #1e3a5f;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #0074d9;
+}
+
+/* =============================
+   Hero Section
+============================= */
+.products-hero {
+  background: linear-gradient(to right, #e6f0ff, #ffffff);
+  text-align: center;
+  padding: 5rem 2rem 3rem;
+  animation: fadeInDown 1.5s ease;
+}
+
+.products-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.products-hero p {
+  font-size: 1.2rem;
+  color: #345678;
+}
+
+/* =============================
+   Product Grid & Cards
+============================= */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background-color: #ffffff;
+}
+
+.product-card {
+  background: lightgrey;
+  border-radius: 12px;
+  width: 260px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.product-card h3 {
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: #005fa3;
+}
+
+.product-card p {
+  padding: 0 1rem 1rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* =============================
+   Buttons
+============================= */
+.contact-btn,
+.view-btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  margin: 0.5rem auto 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-btn {
+  background-color: #0074d9;
+  color: #fff;
+}
+
+.contact-btn:hover {
+  background-color: #005fa3;
+}
+
+.view-btn {
+  background-color: #4CAF50;
+  color: white;
+  margin-left: 10px;
+}
+
+.view-btn:hover {
+  background-color: #45a049;
+  box-shadow: 0 0 10px rgba(0, 128, 0, 0.3);
+}
+
+/* =============================
+   Appointment Form Overlay
+============================= */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
+.appointment-form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem 1.2rem;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 460px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  transform: scale(0.95);
+  opacity: 0;
+  animation: popup 0.4s forwards ease;
+}
+
+.appointment-form h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #1e3a5f;
+  text-align: center;
+}
+
+.appointment-form .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.appointment-form form {
+  overflow-y: auto;
+  padding-right: 10px;
+  flex-grow: 1;
+}
+
+.appointment-form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.appointment-form input,
+.appointment-form select,
+.appointment-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.appointment-form textarea {
+  resize: vertical;
+}
+
+.appointment-form button[type="submit"] {
+  margin-top: 1rem;
+  background-color: #0074d9;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.appointment-form button[type="submit"]:hover {
+  background-color: #005fa3;
+}
+
+/* =============================
+   Footer
+============================= */
+footer {
+  background-color: #e6f0ff;
+  color: #1e3a5f;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 4rem;
+}
+
+footer a {
+  color: #0074d9;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* =============================
+   Animations
+============================= */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popup {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =============================
+   Responsive Design
+============================= */
+@media (max-width: 767px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .products-hero h1 {
+    font-size: 2rem;
+  }
+
+  .product-card {
+    width: 90%;
+  }
+}

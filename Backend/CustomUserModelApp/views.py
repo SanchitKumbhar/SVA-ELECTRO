@@ -67,4 +67,6 @@ def registeruseraction(request,id):
                 check(user)
                 return redirect("/products")
 
-            
+
+def dashboard(request):
+     return render(request,"admin.html")
