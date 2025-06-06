@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import json
-from .models import ProductAppointment,Product
+from .models import Product
 from django.core import serializers
 
 # Create your views here.
@@ -28,10 +28,10 @@ def submitProductpage(request):
     message=request.POST.get('message')
     user=request.user
 
-    data=ProductAppointment.objects.create(
-        vehicleimage=vehicleimage,modelname=modelname,user=user,description=description,appointmentdate=appointmentdate,
-        qty=qty,slot=slot,location=location,purpose=purpose,message=message
-    )
+    # data=ProductAppointment.objects.create(
+    #     vehicleimage=vehicleimage,modelname=modelname,user=user,description=description,appointmentdate=appointmentdate,
+    #     qty=qty,slot=slot,location=location,purpose=purpose,message=message
+    # )
 
     return JsonResponse({
         'response'  : 200

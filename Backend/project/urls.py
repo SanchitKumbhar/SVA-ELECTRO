@@ -25,6 +25,8 @@ urlpatterns = [
     path('', include('products.urls')),
     path('', include('productsapi.urls')),
     path('', include('order.urls')),
+    path('', include('appointment.urls')),
+
 
 
     # rest framework

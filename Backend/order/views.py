@@ -51,7 +51,35 @@ class OrderViewclass(viewsets.ModelViewSet):
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Orders.DoesNotExist:
             return Response({"error":"Order not found"},status=status.HTTP_404_NOT_FOUND)
-
+    
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        allowed_fields = [
+    "product",
+    "vehicleimage",
+    "modelname",
+    "description",
+    "qty",
+    "user",
+    "appointmentdate",
+    "slot",
+    "location",
+    "purpose",
+    "message"
+    ]
+        # Update only allowed fields using setattr
+        for field in allowed_fields:
+            if field in request.data:
+                setattr(instance, field, request.data[field])
+        
+        # Use self.get_serializer
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        
+        return Response(serializer.errors, status=400)
 
     
     

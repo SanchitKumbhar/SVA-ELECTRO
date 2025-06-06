@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'products',
     'order',
     "productsapi",
+    "appointment",
     'rest_framework',
     'rest_framework_simplejwt'
 

@@ -70,3 +70,6 @@ def registeruseraction(request,id):
 
 def dashboard(request):
      return render(request,"admin.html")
+
+def products(request):
+     return render(request,"products.html")
