@@ -1,251 +1,652 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoParts Pro - EV Parts</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #191414;
-      color: #fff;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoParts Pro - Vehicle Spare Parts & Assembly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --spotify-green: #1DB954;
+            --spotify-black: #191414;
+            --dark-gray: #121212;
+            --light-gray: #282828;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --border-color: #404040;
+        }
 
-    .product-section {
-      padding: 60px 20px;
-      max-width: 1400px;
-      margin: auto;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #1DB954;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--spotify-black);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
+        /* Featured Banner Section */
+        .featured-banner {
+            display:none;
+            background: linear-gradient(135deg, var(--spotify-green) 0%, #1ed760 100%);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .product-card {
-      background-color: #282828;
-      padding: 20px;
-      border-radius: 15px;
-      transition: 0.3s ease;
-    }
+        .featured-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.3;
+        }
 
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
+        .banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
 
-    .product-icon {
-      font-size: 30px;
-      margin-bottom: 15px;
-      background: #1DB954;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .banner-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-    .product-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+        .banner-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--text-white);
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
 
-    .product-description {
-      color: #ccc;
-      margin: 10px 0;
-    }
+        .banner-cta {
+            display: inline-block;
+            background: var(--spotify-black);
+            color: var(--text-white);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
 
-    .product-price {
-      color: #1DB954;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+        .banner-cta:hover {
+            background: transparent;
+            border-color: var(--spotify-black);
+            color: var(--spotify-black);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-    .product-btn {
-      background: #1DB954;
-      color: #191414;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+        /* Product Grid Section */
+        .product-section {
+            padding: 80px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-    /* Overlay */
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-out;
+        }
 
-    .overlay.active {
-      display: flex;
-    }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
 
-    .modal {
-      background: #282828;
-      border-radius: 15px;
-      padding: 20px;
-      max-width: 500px;
-      width: 90%;
-      color: white;
-      border: 1px solid #444;
-      position: relative;
-    }
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-    .close-btn {
-      position: absolute;
-      top: 10px; right: 15px;
-      font-size: 24px;
-      background: none;
-      border: none;
-      color: #aaa;
-      cursor: pointer;
-    }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
+        .product-card {
+            background: var(--light-gray);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
 
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--spotify-green);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
 
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #444;
-      border-radius: 8px;
-      background: #121212;
-      color: white;
-    }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(29, 185, 84, 0.2);
+            border-color: var(--spotify-green);
+        }
 
-    .form-submit {
-      background: #1DB954;
-      color: black;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      font-weight: bold;
-      border-radius: 25px;
-      cursor: pointer;
-    }
-  </style>
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--spotify-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: var(--text-white);
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
+
+        .product-description {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--spotify-green);
+            margin-bottom: 20px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .product-features li {
+            color: var(--text-gray);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            color: var(--spotify-green);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .product-btn {
+            width: 100%;
+            background: var(--spotify-green);
+            color: var(--text-white);
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product-btn:hover {
+            background: #1ed760;
+            transform: translateY(-2px);
+        }
+
+        /* Modal Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--light-gray);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--spotify-green);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-white);
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--dark-gray);
+            color: var(--text-white);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--spotify-green);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-error {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-submit {
+            width: 100%;
+            background: var(--spotify-green);
+            color: var(--text-white);
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background: #1ed760;
+            transform: translateY(-2px);
+        }
+
+        .form-submit:disabled {
+            background: var(--text-gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-gray);
+            padding: 60px 20px 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--text-white);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-gray);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--spotify-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-gray);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--spotify-green);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .banner-title {
+                font-size: 2.5rem;
+            }
+
+            .banner-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .modal {
+                padding: 30px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-title {
+                font-size: 2rem;
+            }
+
+            .featured-banner {
+                padding: 60px 20px;
+            }
+
+            .product-section {
+                padding: 60px 20px;
+            }
+
+            .modal {
+                width: 95%;
+                padding: 25px 15px;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
+    <!-- Featured Banner Section -->
+    <section class="featured-banner">
+        <div class="banner-content">
+            <h1 class="banner-title">AutoParts Pro</h1>
+            <p class="banner-subtitle">Quality vehicle spare parts and professional assembly services for all makes and models</p>
+            <a href="#productGrid" class="banner-cta">Shop Parts</a>
+        </div>
+    </section>
 
-  <!-- Product Section -->
-  <section class="product-section">
-    <h2 class="section-title">Available Products</h2>
-    <div class="product-grid" id="productGrid"></div>
-  </section>
+    <!-- Product Grid Section -->
+    <section class="product-section">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Vehicle Parts & Services</h2>
+            <p class="section-subtitle">High-quality spare parts and professional assembly services for cars, trucks, and motorcycles</p>
+        </div>
+        <div class="product-grid fade-in" id="productGrid">
+            <!-- Products will be dynamically loaded here -->
+        </div>
+    </section>
 
-  <!-- Modal Overlay -->
-  <div class="overlay" id="overlay">
-    <div class="modal">
-      <button class="close-btn" onclick="closeForm()">×</button>
-      <h3>Schedule Service</h3>
-      <form id="form">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" required />
+    <!-- Modal Overlay -->
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Schedule Service</h2>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label class="form-label" for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" class="form-input" required>
+                    <div class="form-error" id="fullNameError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                    <div class="form-error" id="emailError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" required>
+                    <div class="form-error" id="phoneError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="service">Service Type *</label>
+                    <select id="service" name="service" class="form-select" required>
+                        <option value="">Select a service</option>
+                        <option value="brake-assembly">Brake System Assembly</option>
+                        <option value="engine-parts">Engine Parts Installation</option>
+                        <option value="suspension">Suspension System Service</option>
+                        <option value="transmission">Transmission Service</option>
+                        <option value="electrical">Electrical System Repair</option>
+                        <option value="exhaust">Exhaust System Assembly</option>
+                        <option value="diagnostic">Vehicle Diagnostic</option>
+                    </select>
+                    <div class="form-error" id="serviceError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="vehicleInfo">Vehicle Information *</label>
+                    <input type="text" id="vehicleInfo" name="vehicleInfo" class="form-input" placeholder="Year, Make, Model (e.g., 2020 Toyota Camry)" required>
+                    <div class="form-error" id="vehicleInfoError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="date">Preferred Date *</label>
+                    <input type="date" id="date" name="date" class="form-input" required>
+                    <div class="form-error" id="dateError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="time">Preferred Time *</label>
+                    <select id="time" name="time" class="form-select" required>
+                        <option value="">Select time</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                    </select>
+                    <div class="form-error" id="timeError"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="message">Additional Details</label>
+                    <textarea id="message" name="message" class="form-textarea" placeholder="Describe any specific issues with your vehicle or additional services needed..."></textarea>
+                </div>
+                <button type="submit" class="form-submit">Schedule Service</button>
+            </form>
         </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" required />
-        </div>
-        <div class="form-group">
-          <label>Service</label>
-          <select required>
-            <option value="">Select</option>
-            <option>Brake Repair</option>
-            <option>Engine Check</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Date</label>
-          <input type="date" required />
-        </div>
-        <button class="form-submit" type="submit">Book Now</button>
-      </form>
     </div>
-  </div>
 
-  <!-- JS Logic -->
-  <script>
-    const products = [
-      {
-        icon: "fas fa-car",
-        title: "Brake System",
-        desc: "High-quality brake parts and pads",
-        price: "$299"
-      },
-      {
-        icon: "fas fa-cog",
-        title: "Engine Components",
-        desc: "Performance-tested engine parts",
-        price: "$899"
-      },
-      {
-        icon: "fas fa-tools",
-        title: "Suspension Kit",
-        desc: "Shock absorbers and suspension bushings",
-        price: "$499"
-      }
-    ];
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: info@autopartspro.com</p>
+                <p>Phone: (555) 789-AUTO</p>
+                <p>Address: 456 Automotive Blvd, Motor City, MC 54321</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Our Services</h3>
+                <p><a href="#">Brake System Service</a></p>
+                <p><a href="#">Engine Repair</a></p>
+                <p><a href="#">Suspension Work</a></p>
+                <p><a href="#">Electrical Diagnostics</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Vehicle Brands</h3>
+                <p><a href="#">Toyota</a></p>
+                <p><a href="#">Honda</a></p>
+                <p><a href="#">Ford</a></p>
+                <p><a href="#">Chevrolet</a></p>
+                <p><a href="#">BMW</a></p>
+                <p><a href="#">Mercedes</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <p><a href="#">Parts Catalog</a></p>
+                <p><a href="#">Installation Guide</a></p>
+                <p><a href="#">Warranty Info</a></p>
+                <p><a href="#">Emergency Service</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AutoParts Pro. All rights reserved.</p>
+        </div>
+    </footer>
 
-    const grid = document.getElementById("productGrid");
-    const overlay = document.getElementById("overlay");
-
-    function loadProducts() {
-      products.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.innerHTML = `
-          <div class="product-icon"><i class="${p.icon}"></i></div>
-          <div class="product-title">${p.title}</div>
-          <div class="product-description">${p.desc}</div>
-          <div class="product-price">${p.price}</div>
-          <button class="product-btn" onclick="openForm()">Book Now</button>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function openForm() {
-      overlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeForm() {
-      overlay.classList.remove("active");
-      document.body.style.overflow = "auto";
-      document.getElementById("form").reset();
-    }
-
-    document.addEventListener("DOMContentLoaded", loadProducts);
-  </script>
-
-  <!-- FontAwesome Icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="p.js"></script>
 </body>
 </html>
