@@ -298,7 +298,7 @@
                 </section>
 
                 <!-- Products Page -->
-                <section id="products" class="page">
+                <!-- <section id="products" class="page">
                     <h1>Products</h1>
                     <div class="filter-container">
                         <div class="search-filter">
@@ -477,7 +477,15 @@
                         <button class="page-btn">2</button>
                         <button class="page-btn">Next</button>
                     </div>
+                </section> -->
+
+
+                <!-- This is essential and must remain -->
+                <section id="products" class="page">
+                    <div class="products-grid" id="products-grid"></div>
                 </section>
+
+
 
                 <!-- Add Product Page -->
                 <section id="add-product" class="page">
@@ -492,10 +500,10 @@
                                 <label for="product-category">Product Category</label>
                                 <select id="product-category" required>
                                     <option value="">Select a category</option>
-                                    <option value="buses">Electric Buses</option>
-                                    <option value="chargers">Charging Equipment</option>
-                                    <option value="parts">Spare Parts</option>
-                                    <option value="accessories">Accessories</option>
+                                    <option value="1">Electric Buses</option>
+                                    <option value="2">Charging Equipment</option>
+                                    <option value="3">Spare Parts</option>
+                                    <option value="4">Accessories</option>
                                 </select>
                             </div>
                         </div>
@@ -525,7 +533,8 @@
                                 <div id="file-name" class="file-name">No file chosen</div>
                             </div>
                             <div class="image-preview">
-                                <img id="image-preview" src="https://via.placeholder.com/300x200?text=Product+Image" alt="Product Image Preview">
+                                <img id="image-preview"  alt="Product Image Preview">
+
                             </div>
                         </div>
                         <div class="form-actions">
@@ -600,6 +609,8 @@
             </div>
         </main>
     </div>
+
+
 
     <script src="script.js"></script>
 </body>
