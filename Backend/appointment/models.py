@@ -10,7 +10,6 @@ class AppointmentModel(models.Model):
         ('M','Morning')
     ]
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    vehicleimage = models.ImageField(upload_to="vehicleimg")
     modelname=models.CharField(max_length=50)
     description=models.TextField()
     qty=models.IntegerField()
