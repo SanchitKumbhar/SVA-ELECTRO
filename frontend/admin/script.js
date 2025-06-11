@@ -1,5 +1,5 @@
 // ====== Auth Token and Product Container ======
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NDA1NzM2LCJpYXQiOjE3NDk0MDIxMzYsImp0aSI6ImMxZjZhZGMzNzc5NTQ5YzBiN2Q5YjJkOTlkYmExNTEzIiwidXNlcl9pZCI6MjR9.HEmJBiuvIZrykAqTw7FuP7Pcs7Wz1glfkwu2aKuyGnU";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NjYxNTI2LCJpYXQiOjE3NDk2NTc5MjYsImp0aSI6ImVmNjQ2NDE2OWU2YzRiNDA5NWI5ZmE2ZjZlYTUwYWZmIiwidXNlcl9pZCI6MjR9._b6poc1EaNUie1DNm1y72uhKjtaYyzFBM_5PYwtO9mM";
 const productContainer = document.getElementById("products-grid");
 
 // ====== Helper Functions ======
@@ -152,7 +152,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const card = e.target.closest('.product-card');
       const id = e.target.getAttribute('data-id');
       const name = card.querySelector('h3').textContent;
-      const category = card.querySelector('.product-category').textContent.split(': ')[1];
+      const categoryText = card.querySelector('.product-category').textContent.split(': ')[1];
+      const categoryMap = {
+        "Electric Buses": "buses",
+        "Charging Equipment": "chargers",
+        "Spare Parts": "parts",
+        "Accessories": "accessories"
+      };
+      document.getElementById('edit-product-category').value = categoryMap[categoryText] || '';
+
       const price = card.querySelector('.product-price').textContent.replace('$', '');
       const stock = card.querySelector('.product-stock').textContent.split(': ')[1].replace(' units', '');
       const features = Array.from(card.querySelectorAll('.product-features li')).map(li => li.textContent).join('\n');
@@ -160,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       document.getElementById('edit-product-id').value = id;
       document.getElementById('edit-product-name').value = name;
-      document.getElementById('edit-product-category').value = category.toLowerCase();
+      // document.getElementById('edit-product-category').value = category.toLowerCase();
       document.getElementById('edit-product-price').value = price;
       document.getElementById('edit-product-stock').value = stock;
       document.getElementById('edit-product-features').value = features;
@@ -239,10 +247,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const editProductForm = document.getElementById('edit-product-form');
   if (editProductForm) {
-    editProductForm.addEventListener('submit', function (e) {
+    editProductForm.addEventListener('submit', async function (e) {
       e.preventDefault();
-      alert('Product updated successfully!');
-      editModal.style.display = 'none';
+
+      const id = document.getElementById('edit-product-id').value.replace('PRD-', '');
+      const name = document.getElementById('edit-product-name').value;
+      const category = document.getElementById('edit-product-category').value;
+      const price = document.getElementById('edit-product-price').value;
+      const stock = document.getElementById('edit-product-stock').value;
+      const description = document.getElementById('edit-product-features').value;
+
+      const fileInput = document.getElementById('edit-product-image');
+      const submitBtn = editProductForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Saving...";
+
+      const formData = new FormData();
+      formData.append('productname', name);
+      formData.append('productcategory', category);
+      formData.append('cost', price);
+      formData.append('stock', stock);
+      formData.append('description', description);
+      formData.append('launch', new Date().toISOString().split('T')[0]);
+
+      if (fileInput.files.length > 0) {
+        formData.append('productimg', fileInput.files[0]);
+      }
+
+      try {
+        const response = await fetch(`https://sanchitkumbhar.pythonanywhere.com/products/${id}/`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Save Changes";
+
+        if (!response.ok) {
+          const error = await response.json();
+          console.error('❌ Failed to update product:', error);
+          alert(`Failed to update product:\n${JSON.stringify(error, null, 2)}`);
+        } else {
+          const updated = await response.json();
+          console.log('✅ Product updated:', updated);
+          alert('Product updated successfully!');
+          editModal.style.display = 'none';
+          loadProducts();
+        }
+      } catch (error) {
+        console.error('❌ Network error:', error);
+        alert('An error occurred. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Save Changes";
+      }
     });
   }
 });
