@@ -2,6 +2,7 @@
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NjYxNTI2LCJpYXQiOjE3NDk2NTc5MjYsImp0aSI6ImVmNjQ2NDE2OWU2YzRiNDA5NWI5ZmE2ZjZlYTUwYWZmIiwidXNlcl9pZCI6MjR9._b6poc1EaNUie1DNm1y72uhKjtaYyzFBM_5PYwtO9mM";
 const productContainer = document.getElementById("products-grid");
 
+
 // ====== Helper Functions ======
 function getCategoryName(id) {
   const categories = {
@@ -12,6 +13,8 @@ function getCategoryName(id) {
   };
   return categories[id] || "Unknown";
 }
+
+
 
 function renderProductCard(product) {
   return `
@@ -41,6 +44,8 @@ function renderProductCard(product) {
   `;
 }
 
+
+
 async function loadProducts() {
   try {
     const response = await fetch("https://sanchitkumbhar.pythonanywhere.com/products/", {
@@ -59,6 +64,8 @@ async function loadProducts() {
     if (productContainer) productContainer.innerHTML = "<p style='color:red;'>Failed to load products. Please try again later.</p>";
   }
 }
+
+
 
 // ====== DOM Content Loaded ======
 document.addEventListener("DOMContentLoaded", function () {
