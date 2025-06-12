@@ -1,5 +1,5 @@
 // ====== Auth Token and Product Container ======
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5NjYxNTI2LCJpYXQiOjE3NDk2NTc5MjYsImp0aSI6ImVmNjQ2NDE2OWU2YzRiNDA5NWI5ZmE2ZjZlYTUwYWZmIiwidXNlcl9pZCI6MjR9._b6poc1EaNUie1DNm1y72uhKjtaYyzFBM_5PYwtO9mM";
+
 const productContainer = document.getElementById("products-grid");
 
 // ====== Helper Functions ======
@@ -42,21 +42,45 @@ function renderProductCard(product) {
 }
 
 async function loadProducts() {
+  let token = ''; // Declare token here
+
   try {
+    // 1. Fetch the JWT token
+    const tokenResponse = await fetch('/get-jwt/');
+    if (!tokenResponse.ok) {
+      throw new Error(`Failed to retrieve JWT token. Status: ${tokenResponse.status}`);
+    }
+    const tokenData = await tokenResponse.json();
+    token = tokenData.access; // Assign the fetched token to the 'token' variable
+
+    // 2. Now use the fetched token to get products
     const response = await fetch("https://sanchitkumbhar.pythonanywhere.com/products/", {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${token}` // Use the dynamically fetched token
       }
     });
 
-    if (!response.ok) throw new Error("Failed to fetch products");
+    if (!response.ok) {
+      const errorDetail = await response.json(); // Try to get more specific error from server
+      throw new Error(errorDetail.detail || `Failed to fetch products. Status: ${response.status}`);
+    }
 
     const products = await response.json();
-    productContainer.innerHTML = products.map(renderProductCard).join("");
+    // Assuming productContainer and renderProductCard are defined elsewhere in your scope
+    if (productContainer) {
+        productContainer.innerHTML = products.map(renderProductCard).join("");
+    } else {
+        console.warn("productContainer element not found. Products fetched but not rendered.");
+    }
+
   } catch (err) {
     console.error("❌ Fetch failed:", err);
-    if (productContainer) productContainer.innerHTML = "<p style='color:red;'>Failed to load products. Please try again later.</p>";
+    if (productContainer) {
+      productContainer.innerHTML = "<p style='color:red;'>Failed to load products. Please try again later.</p>";
+    } else {
+        console.error("productContainer element not found to display error message.");
+    }
   }
 }
 
@@ -200,109 +224,150 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const addProductForm = document.getElementById('add-product-form');
   if (addProductForm) {
-    addProductForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
+   addProductForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-      const formData = new FormData();
-      formData.append('productname', document.getElementById('product-name').value);
-      formData.append('productcategory', document.getElementById('product-category').value);
-      formData.append('cost', document.getElementById('product-price').value);
-      formData.append('stock', document.getElementById('product-stock').value);
-      formData.append('description', document.getElementById('product-features').value);
-      formData.append('launch', new Date().toISOString().split('T')[0]);
+  // --- START FIX: Fetch JWT Token first ---
+  let token = ''; // Declare token here
+  try {
+    const tokenResponse = await fetch('/get-jwt/'); // Await the JWT fetch
+    if (!tokenResponse.ok) {
+      throw new Error(`Failed to retrieve JWT token. Status: ${tokenResponse.status}`);
+    }
+    const tokenData = await tokenResponse.json();
+    token = tokenData.access; // Assign the fetched token to the 'token' variable
+  } catch (tokenError) {
+    console.error('Error fetching access token:', tokenError);
+    alert('Failed to get authorization token. Please try again.');
+    // It's crucial to stop execution here if the token can't be obtained
+    return;
+  }
+  // --- END FIX ---
 
-      const fileInput = document.getElementById('product-image');
-      if (fileInput.files.length > 0) {
-        formData.append('productimg', fileInput.files[0]);
-      }
+  const formData = new FormData();
+  formData.append('productname', document.getElementById('product-name').value);
+  formData.append('productcategory', document.getElementById('product-category').value);
+  formData.append('cost', document.getElementById('product-price').value);
+  formData.append('stock', document.getElementById('product-stock').value);
+  formData.append('description', document.getElementById('product-features').value);
+  formData.append('launch', new Date().toISOString().split('T')[0]);
 
-      try {
-        const response = await fetch('https://sanchitkumbhar.pythonanywhere.com/products/', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: formData
-        });
+  const fileInput = document.getElementById('product-image');
+  if (fileInput.files.length > 0) {
+    formData.append('productimg', fileInput.files[0]);
+  }
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('❌ Failed to add product:', response.status, errorData);
-          alert('Failed to add product. Please try again.');
-        } else {
-          const data = await response.json();
-          console.log('✅ Product added:', data);
-          alert('Product added successfully!');
-          this.reset();
-          document.getElementById('image-preview').src = 'https://via.placeholder.com/300x200?text=Product+Image';
-          document.getElementById('file-name').textContent = 'No file chosen';
-          loadProducts();
-        }
-      } catch (error) {
-        console.error('❌ Error adding product:', error);
-        alert('Something went wrong while adding the product.');
-      }
+  try {
+    const response = await fetch('https://sanchitkumbhar.pythonanywhere.com/products/', {
+      method: 'POST',
+      headers: {
+        // IMPORTANT: When sending FormData with a file, you usually don't set
+        // 'Content-Type': 'multipart/form-data' explicitly. The browser
+        // sets it automatically with the correct boundary. Just set Authorization.
+        Authorization: `Bearer ${token}` // Use the dynamically fetched token
+      },
+      body: formData
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('❌ Failed to add product:', response.status, errorData);
+      alert('Failed to add product. Please try again.');
+    } else {
+      const data = await response.json();
+      console.log('✅ Product added:', data);
+      alert('Product added successfully!');
+      this.reset(); // Resets the form
+      document.getElementById('image-preview').src = 'https://via.placeholder.com/300x200?text=Product+Image';
+      document.getElementById('file-name').textContent = 'No file chosen';
+      // Assuming loadProducts() is defined elsewhere and reloads the product list
+      loadProducts();
+    }
+  } catch (error) {
+    console.error('❌ Error adding product:', error);
+    alert('Something went wrong while adding the product.');
+  }
+});
   }
 
   const editProductForm = document.getElementById('edit-product-form');
   if (editProductForm) {
-    editProductForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
+   editProductForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-      const id = document.getElementById('edit-product-id').value.replace('PRD-', '');
-      const name = document.getElementById('edit-product-name').value;
-      const category = document.getElementById('edit-product-category').value;
-      const price = document.getElementById('edit-product-price').value;
-      const stock = document.getElementById('edit-product-stock').value;
-      const description = document.getElementById('edit-product-features').value;
+  // --- START FIX: Fetch JWT Token first ---
+  let token = ''; // Declare token here
+  try {
+    const tokenResponse = await fetch('/get-jwt/'); // Await the JWT fetch
+    if (!tokenResponse.ok) {
+      throw new Error(`Failed to retrieve JWT token. Status: ${tokenResponse.status}`);
+    }
+    const tokenData = await tokenResponse.json();
+    token = tokenData.access; // Assign the fetched token to the 'token' variable
+  } catch (tokenError) {
+    console.error('Error fetching access token:', tokenError);
+    alert('Failed to get authorization token. Please try again.');
+    // Crucially, stop execution if the token can't be obtained
+    return;
+  }
+  // --- END FIX ---
 
-      const fileInput = document.getElementById('edit-product-image');
-      const submitBtn = editProductForm.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Saving...";
+  const id = document.getElementById('edit-product-id').value.replace('PRD-', '');
+  const name = document.getElementById('edit-product-name').value;
+  const category = document.getElementById('edit-product-category').value;
+  const price = document.getElementById('edit-product-price').value;
+  const stock = document.getElementById('edit-product-stock').value;
+  const description = document.getElementById('edit-product-features').value;
 
-      const formData = new FormData();
-      formData.append('productname', name);
-      formData.append('productcategory', category);
-      formData.append('cost', price);
-      formData.append('stock', stock);
-      formData.append('description', description);
-      formData.append('launch', new Date().toISOString().split('T')[0]);
+  const fileInput = document.getElementById('edit-product-image');
+  const submitBtn = editProductForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Saving...";
 
-      if (fileInput.files.length > 0) {
-        formData.append('productimg', fileInput.files[0]);
-      }
+  const formData = new FormData();
+  formData.append('productname', name);
+  formData.append('productcategory', category);
+  formData.append('cost', price);
+  formData.append('stock', stock);
+  formData.append('description', description);
+  formData.append('launch', new Date().toISOString().split('T')[0]);
 
-      try {
-        const response = await fetch(`https://sanchitkumbhar.pythonanywhere.com/products/${id}/`, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-          body: formData
-        });
+  if (fileInput.files.length > 0) {
+    formData.append('productimg', fileInput.files[0]);
+  }
 
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Save Changes";
-
-        if (!response.ok) {
-          const error = await response.json();
-          console.error('❌ Failed to update product:', error);
-          alert(`Failed to update product:\n${JSON.stringify(error, null, 2)}`);
-        } else {
-          const updated = await response.json();
-          console.log('✅ Product updated:', updated);
-          alert('Product updated successfully!');
-          editModal.style.display = 'none';
-          loadProducts();
-        }
-      } catch (error) {
-        console.error('❌ Network error:', error);
-        alert('An error occurred. Please try again.');
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Save Changes";
-      }
+  try {
+    const response = await fetch(`https://sanchitkumbhar.pythonanywhere.com/products/${id}/`, {
+      method: 'PATCH', // Using PATCH for partial updates
+      headers: {
+        // Again, for FormData, the browser handles 'Content-Type'.
+        // Only set Authorization.
+        'Authorization': `Bearer ${token}` // Use the dynamically fetched token
+      },
+      body: formData
     });
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Save Changes";
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('❌ Failed to update product:', response.status, error);
+      alert(`Failed to update product:\n${JSON.stringify(error, null, 2)}`);
+    } else {
+      const updated = await response.json();
+      console.log('✅ Product updated:', updated);
+      alert('Product updated successfully!');
+      // Assuming editModal and loadProducts() are defined elsewhere
+      editModal.style.display = 'none';
+      loadProducts();
+    }
+  } catch (error) {
+    console.error('❌ Network error:', error);
+    alert('An error occurred. Please try again.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Save Changes";
+  }
+});
   }
 });
