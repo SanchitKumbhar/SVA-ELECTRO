@@ -2,6 +2,7 @@
 
 const productContainer = document.getElementById("products-grid");
 
+
 // ====== Helper Functions ======
 function getCategoryName(id) {
   const categories = {
@@ -12,6 +13,8 @@ function getCategoryName(id) {
   };
   return categories[id] || "Unknown";
 }
+
+
 
 function renderProductCard(product) {
   return `
@@ -40,6 +43,8 @@ function renderProductCard(product) {
     </div>
   `;
 }
+
+
 
 async function loadProducts() {
   let token = ''; // Declare token here
@@ -83,6 +88,8 @@ async function loadProducts() {
     }
   }
 }
+
+
 
 // ====== DOM Content Loaded ======
 document.addEventListener("DOMContentLoaded", function () {
