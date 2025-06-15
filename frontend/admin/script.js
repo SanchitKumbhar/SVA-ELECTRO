@@ -2,6 +2,7 @@
 
 const productContainer = document.getElementById("products-grid");
 
+
 // ====== Helper Functions ======
 function getCategoryName(id) {
   const categories = {
@@ -12,6 +13,8 @@ function getCategoryName(id) {
   };
   return categories[id] || "Unknown";
 }
+
+
 
 function renderProductCard(product) {
   return `
@@ -40,6 +43,8 @@ function renderProductCard(product) {
     </div>
   `;
 }
+
+
 
 async function loadProducts() {
   let token = ''; // Declare token here
@@ -83,6 +88,8 @@ async function loadProducts() {
     }
   }
 }
+
+
 
 // ====== DOM Content Loaded ======
 document.addEventListener("DOMContentLoaded", function () {
@@ -371,3 +378,56 @@ document.addEventListener("DOMContentLoaded", function () {
 });
   }
 });
+
+
+
+
+async function fetchAppointments() {
+    try {
+        const res = await fetch('/api/product-appointments/', {
+            headers: {
+                'X-CSRFToken': 'YOUR_CSRF_TOKEN' // Replace or dynamically inject
+            }
+        });
+
+        const data = await res.json();
+
+        const tbody = document.querySelector('#appointments-table tbody');
+        tbody.innerHTML = '';
+
+        data.forEach(app => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${app.id}</td>
+                <td>${app.product}</td>
+                <td>${app.user}</td>
+                <td>${app.modelname}</td>
+                <td>${app.qty}</td>
+                <td>${app.appointmentdate}</td>
+                <td>${slotLabel(app.slot)}</td>
+                <td>${app.location}</td>
+                <td>${app.purpose}</td>
+                <td>${app.message}</td>
+                <td><img src="${app.vehicleimage}" alt="Vehicle" width="80"></td>
+            `;
+            tbody.appendChild(row);
+        });
+    } catch (err) {
+        console.error("Failed to fetch appointments:", err);
+    }
+}
+
+function slotLabel(code) {
+    switch (code) {
+        case 'M': return 'Morning';
+        case 'A': return 'Afternoon';
+        case 'E': return 'Evening';
+        default: return code;
+    }
+}
+
+// Optional: Call this when navigating to appointments tab
+document.querySelector('[data-page="appointments"]').addEventListener('click', () => {
+    fetchAppointments();
+});
+
