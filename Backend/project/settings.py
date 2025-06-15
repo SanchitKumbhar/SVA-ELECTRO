@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
-
+import os
+from datetime   import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,19 +41,31 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'CustomUserModelApp',  # Ensure this matches the app directory name
     'products',
+    'order',
+    "productsapi",
+    "appointment",
     'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders'
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware', remove in production
+    #'django.middleware.csrf.CsrfViewMiddleware', remove in production
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",   # for local dev
+    # "https://yourfrontend.com",  # your live frontend
+]
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 ROOT_URLCONF = 'project.urls'
@@ -92,8 +104,20 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        ],
+        'DEFAULT_ROUTER_TRAILING_SLASH': False,  # disables trailing slash requirement
 }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
 
 
 # Password validation
@@ -129,12 +153,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Directory for static files
+    BASE_DIR / "static",  # or os.path.join(BASE_DIR, "static") for older Python
 ]
-STATIC_ROOT = BASE_DIR / "staticfiles"  # Directory for collected static files
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

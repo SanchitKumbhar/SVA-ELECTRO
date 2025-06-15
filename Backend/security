@@ -1,0 +1,4 @@
+1.Turn on csrf protection
+2.Check user autthentication(current django auth)
+3.Turn on only dev for api and autthentication ----done
+
