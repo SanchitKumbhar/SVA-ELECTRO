@@ -18,10 +18,12 @@ class OrderViewclass(viewsets.ModelViewSet):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
     def list(self, request, *args, **kwargs):
-        data = Orders.objects.all()
-        print(data)
-        serializer=self.serializer_class(data,many=True)
-        return Response(serializer.data)
+        if request.user.is_superuser:
+            data = Orders.objects.all()
+            print(data)
+            serializer=self.serializer_class(data,many=True)
+            return Response(serializer.data)
+        return Response({"message":"You are not authorized to view this data"},status=status.HTTP_403_FORBIDDEN)
     
     def update(self, request, *args, **kwargs):
         partial=kwargs.pop("partial",False)

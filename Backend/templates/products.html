@@ -1,100 +1,140 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
+{% load static %}
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Products | Sva-Electro</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="text"/>
-  <link rel="stylesheet" href={% static "css/products_page.css" %}>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Spotify Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Circular+Std:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+<link rel="stylesheet" href={% static "css/product.css" %}>
 </head>
+
 <body>
+    <section class="featured-banner">
+        <div class="featured-content">
+            <h1>Discover Amazing Products</h1>
+            <p>Experience the next generation of innovative products designed for modern life</p>
+            <a href="#productGrid" class="cta-button">Explore Products</a>
+        </div>
+    </section>
 
-  <header>
-    <div class="logo">Sva Electro</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="aboutus.html">About</a>
-      <a href="productnew.html">Products</a>
-      <a href="contactus.html">Contact</a>
-      <a href="help.html">Help</a>
-      <a href="team.html">Team</a>
-      <a href="login.html">Login</a>
-    </nav>
-  </header>
+    <section class="product-section">
+        <div class="section-header">
+            <h2>Our Products</h2>
+            <p>Choose from our curated selection of premium products, each designed to enhance your experience</p>
+        </div>
+        <div class="product-grid" id="productGrid">
+            <div class="loading">Loading products...</div>
+        </div>
+    </section>
 
-  <section class="products-hero">
-    <h1>Our Products</h1>
-    <p>Redefining urban mobility with efficient electric solutions.</p>
-  </section>
+    <!-- Appointment Modal -->
+    <div class="overlay" id="appointmentOverlay">
+    <div class="modal">
+        <button class="close-modal" id="closeAppointmentModal">&times;</button>
+        <h3>Book Appointment</h3>
+        <form id="appointmentForm">
+            <div class="form-group">
+                <label for="productInterest">Product</label>
+                <select id="productInterest" name="product" required>
+                    <option value="">Select a product</option>
+                </select>
+                <div class="error-message" id="productError">Please select a product</div>
+            </div>
 
-  <section class="product-grid" id="productGrid"></section>
+            <div class="form-group">
+                <label for="modelName">Model Name</label>
+                <input type="text" id="modelName" name="modelname" required>
+                <div class="error-message" id="modelNameError">Please enter the model name</div>
+            </div>
 
-  <div class="overlay" id="overlay">
-    <div class="appointment-form" id="appointmentForm">
-      <button class="close-btn" onclick="closeForm()">×</button>
-      <h2>Book an Appointment</h2>
-      <form>
-        <label>Product Image:</label>
-        <input type="text" id="productImage" readonly />
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3" required placeholder="Enter product description..."></textarea>
+                <div class="error-message" id="descriptionError">Please enter a description</div>
+            </div>
 
-        <label>Model Name:</label>
-        <input type="text" id="modelName" readonly />
+            <div class="form-group">
+                <label for="qty">Quantity</label>
+                <input type="number" id="qty" name="qty" required>
+                <div class="error-message" id="qtyError">Please enter quantity</div>
+            </div>
 
-        <label>Description:</label>
-        <input type="text" id="description" readonly />
+            <!-- Assuming user is auto-filled from session or backend -->
 
-        <label>Quantity:</label>
-        <input type="number" min="1" />
+            <div class="form-group">
+                <label for="fromDate">From Date</label>
+                <input type="date" id="fromDate" name="fromappointmentdate" required>
+                <div class="error-message" id="fromDateError">Please select a from date</div>
+            </div>
 
-        <label>Full Name:</label>
-        <input type="text" required />
+                <div class="form-group">
+                <label for="fromDate">To Date</label>
+                <input type="date" id="fromDate" name="toappointmentdate" required>
+                <div class="error-message" id="fromDateError">Please select a from date</div>
+            </div>
 
-        <label>Email Address:</label>
-        <input type="email" required />
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+                <div class="error-message" id="locationError">Please enter location</div>
+            </div>
 
-        <label>Phone Number:</label>
-        <input type="tel" required />
+            <div class="form-group">
+                <label for="purpose">Purpose</label>
+                <input type="text" id="purpose" name="purpose" required>
+                <div class="error-message" id="purposeError">Please enter purpose</div>
+            </div>
 
-        <label>Preferred Appointment Date:</label>
-        <input type="date" required />
+            <div class="form-group">
+                <label for="message">Additional Message</label>
+                <textarea id="message" name="message" rows="3" placeholder="Tell us more about your requirements..."></textarea>
+            </div>
 
-        <label>Preferred Time Slot:</label>
-        <select required>
-          <option>Morning</option>
-          <option>Afternoon</option>
-          <option>Evening</option>
-        </select>
-
-        <label>City / Location:</label>
-        <input type="text" required />
-
-        <label>Purpose of Appointment:</label>
-        <select required>
-          <option>Vehicle Demo</option>
-          <option>Fleet Inquiry</option>
-          <option>Maintenance Support</option>
-          <option>Partnership Discussion</option>
-          <option>Other</option>
-        </select>
-
-        <label>Message / Notes:</label>
-        <textarea rows="4"></textarea>
-
-        <button type="submit">Submit Appointment</button>
-      </form>
+            <button type="submit" id="submit-app-button" class="submit-button">Book Appointment</button>
+        </form>
     </div>
-  </div>
+</div>
 
-  <footer>
-    <p>Contact us: svaelectroreach@gmail.com | +91-XXXXXXXXXX</p>
-    <p>&copy; 2025 Sva-Electro. All rights reserved.</p>
-    <p>
-      <a href="#">LinkedIn</a> | <a href="#">Instagram</a> | <a href="contactus.html">Support</a>
-    </p>
-  </footer>
 
-  <script src={% static "js/products_page.js" %}></script>
+    <!-- Product Info Modal -->
+    <div class="overlay" id="productInfoOverlay">
+        <div class="modal product-info-modal">
+            <button class="close-modal" id="closeProductInfoModal">&times;</button>
+            <div id="productInfoContent">
+                <!-- Product info will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>123 Innovation Street<br>Tech City, TC 12345<br>Phone: (555) 123-4567<br>Email: info@company.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a href="#about">About Us</a></p>
+                <p><a href="#services">Services</a></p>
+                <p><a href="#support">Support</a></p>
+                <p><a href="#careers">Careers</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <p><a href="#facebook">Facebook</a></p>
+                <p><a href="#twitter">Twitter</a></p>
+                <p><a href="#linkedin">LinkedIn</a></p>
+                <p><a href="#instagram">Instagram</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Company Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script src={% static "js/products.js" %}></script>
 </body>
+
 </html>

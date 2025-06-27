@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SWA - Electro - Authentication</title>
@@ -197,7 +197,8 @@
     <div class="tab-content">
         <!-- Login Form -->
         <form id="login-form" action="/login/user" method="post">
-            {% csrf_token %}
+           {% csrf_token %}
+
             <div class="form-group">
                 <label for="login-email">Email or Username</label>
                 <input type="text" id="login-email" name="email" placeholder="Enter your email or username" required>
@@ -216,10 +217,9 @@
         </form>
 
         <!-- Register Form -->
-        <form id="register-form" class="hidden" method="post">
+        <form id="register-form" action="/register/user/1" class="hidden" method="post">
 
-            {% csrf_token %}
-
+{% csrf_token %}
             <input type="hidden" id="role-flag" name="role-flag" value="3">
 
             <div class="role-selector">
@@ -316,8 +316,8 @@
         </form>
     </div>
 </div>
-
-    <<script>
+<script src={% static "js/registration.js" %}></script>
+    <script>
         // Tab switching
         const loginTab = document.getElementById('login-tab');
         const registerTab = document.getElementById('register-tab');
@@ -398,16 +398,9 @@
             });
         });
     
-        // Form submission safety
-        // registerForm.addEventListener('submit', (e) => {
-        //     // Ensure only the selected role's inputs are enabled
-        //     const flag = roleFlag.value;
-        //     if (flag !== '3') disableInputs(clientFields);
-        //     if (flag !== '1') disableInputs(businessFields);
-        //     if (flag !== '2') disableInputs(governmentFields);
-        // });
+
     </script>
-    <script src={% static "registration.js" %}></script>
+    <script src=""></script>
     
     
     

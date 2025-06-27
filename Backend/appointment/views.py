@@ -1,26 +1,36 @@
-from django.shortcuts import render
+from datetime import datetime, timedelta
 from rest_framework import status,viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializer import AppointmentSerializer,AppointmentModel
+from .models import ConfirmedAppointment
+from .serializer import AppointmentSerializer,AppointmentModel,ConfirmAppSerializer
+from rest_framework.decorators import api_view,action
 # Create your views here.
 
 class AppointmentViewClass(viewsets.ModelViewSet):
     permission_classes=[IsAuthenticated]
     serializer_class=AppointmentSerializer
+    serializer_class_two=ConfirmAppSerializer
     queryset = AppointmentModel.objects.all()  # <-- This is mandatory!
 
     def create(self, request, *args, **kwargs):
-        serializer=self.serializer_class(data=request.data)
+        data = request.data.copy()
+        data['user'] = request.user.id
+        print(data['user'])
+        serializer=self.serializer_class(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
     def list(self, request, *args, **kwargs):
-        data=AppointmentModel.objects.all()
-        serializer=self.serializer_class(data,many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        if request.user.is_superuser:
+            print(request.user)
+            data=AppointmentModel.objects.all()
+            serializer=self.serializer_class(data,many=True)
+            print(serializer.data) 
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response({"message":"You are not authorized to view this data"},status=status.HTTP_403_FORBIDDEN)
     
     def destroy(self, request, *args, **kwargs):
         instance=self.get_object()
@@ -42,7 +52,6 @@ class AppointmentViewClass(viewsets.ModelViewSet):
     
 
     def partial_update(self, request, *args, **kwargs):
-        print("sanchit")
         instance = self.get_object()
         print(instance)
         allowed_fields = [
@@ -52,7 +61,8 @@ class AppointmentViewClass(viewsets.ModelViewSet):
             "description",
             "qty",
             "user",
-            "appointmentdate",
+            "fromappointmentdate",
+            "toappointmentdate",
             "slot",
             "location",
             "purpose",
@@ -73,8 +83,42 @@ class AppointmentViewClass(viewsets.ModelViewSet):
             return Response(serializer.data)
         
         return Response(serializer.errors, status=400)
+    
 
-            
-    # eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MTUxNDQ1LCJpYXQiOjE3NDkxNDc4NDUsImp0aSI6IjE4ZTQ3ZDY4Nzg1ZTRjMWViMjE1NmZmZmMyMzE2ZTY3IiwidXNlcl9pZCI6MjR9.KPJY9w-aaLELybY3eQXbQt0P7eeYefTqngNe20XT8nw
+    def generate_dates(self,start_date_str, end_date_str):
+        # Convert string to datetime object
+        start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+        end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
 
-    # refresh:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0OTIzNDI0NSwiaWF0IjoxNzQ5MTQ3ODQ1LCJqdGkiOiIwMGQxY2IyNzcwYWY0ZTI5OWIzZjMzZTdkN2I3ZTVkMCIsInVzZXJfaWQiOjI0fQ.SqjbprpwupGtm9_qrq5UxreUm0ClkWoHER1FBbILwiw
+        # Generate date list
+        date_list = []
+        current_date = start_date
+        while current_date <= end_date:
+            date_list.append(current_date.strftime("%Y-%m-%d"))
+            current_date += timedelta(days=1)
+
+        return date_list
+
+    @action(detail=True, methods=['GET'], url_path="checkslot")
+    def checkslot(self, request, pk=None):
+        print(pk)
+        instance = self.get_object()
+        serializer = self.serializer_class(instance)
+        
+        checklist=self.generate_dates(serializer.data["fromappointmentdate"],serializer.data["toappointmentdate"])
+        print(checklist)
+        confirmapp=ConfirmedAppointment.objects.all()
+        serializer_two=self.serializer_class_two(confirmapp,many=True)
+
+        listofconfirm = [item['appointeddate'][:10] for item in serializer_two.data]
+        print(listofconfirm)
+        availslots = [i for i in checklist if i not in listofconfirm]
+
+        
+        return Response({
+            "message": availslots
+        })
+
+
+
+    

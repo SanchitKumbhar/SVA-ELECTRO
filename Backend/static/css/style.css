@@ -1,13 +1,13 @@
 /* Base Styles */
 :root {
-    --primary-color: #0a2540;
-    --secondary-color: #1e3a8a;
-    --accent-color: #3b82f6;
-    --text-color: #f8fafc;
-    --background-color: #0f172a;
-    --light-bg: #1e293b;
-    --metallic: #cbd5e1;
-    --metallic-light: #e2e8f0;
+    --primary-color: #121212; /* Darker black, Spotify background */
+    --secondary-color: #1DB954; /* Spotify Green */
+    --accent-color: #1DB954; /* Spotify Green for highlights */
+    --text-color: #FFFFFF; /* White text */
+    --background-color: #000000; /* Pure black for deeper sections */
+    --light-bg: #282828; /* Lighter black for cards/sections */
+    --metallic: #B3B3B3; /* Lighter gray for subtle text/elements */
+    --metallic-light: #E0E0E0; /* Even lighter gray */
     --transition: all 0.3s ease;
 }
 
@@ -24,7 +24,7 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--background-color);
+    background-color: var(--primary-color); /* Spotify primary background */
     color: var(--text-color);
     overflow-x: hidden;
     line-height: 1.6;
@@ -85,6 +85,7 @@ img {
     stroke-dasharray: 300;
     stroke-dashoffset: 300;
     animation: draw 2s forwards;
+    stroke: var(--accent-color); /* Apply Spotify green to the logo path */
 }
 
 .loader-text {
@@ -92,6 +93,7 @@ img {
     letter-spacing: 5px;
     opacity: 0;
     animation: fadeIn 1s 1.5s forwards;
+    color: var(--text-color);
 }
 
 @keyframes draw {
@@ -118,9 +120,9 @@ header {
 }
 
 header.scrolled {
-    background-color: rgba(10, 37, 64, 0.9);
+    background-color: rgba(18, 18, 18, 0.9); /* Slightly transparent primary-color */
     backdrop-filter: blur(10px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* Darker shadow */
     padding: 15px 0;
 }
 
@@ -160,6 +162,7 @@ nav {
     position: relative;
     font-weight: 500;
     transition: var(--transition);
+    color: var(--text-color);
 }
 
 .nav-links li a::after {
@@ -198,43 +201,22 @@ nav {
     transition: var(--transition);
 }
 
-
-
-/* .hero {
-    height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-image: url('A-futuristic-sleek-car-illuminated-by-neon-green-and-purple-lights-reflecting-abstract-neon-patterns-on-its-polished-body-as-it-drives-through-a-high-tech-city-at-night.webp');
-    background-size: cover;
-    background-position: center;
-   
-} */
-
-
-
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* Darker overlay */
                 url('img/electric-vehicle-charging_23-2151951201.avif') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--text-color);
     text-align: center;
-  }
+}
 
-
-
-  .hero-text {
-    color: white;
+.hero-text {
+    color: var(--text-color);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-  }
+}
   
-  
-
 .video-container {
     position: absolute;
     top: 0;
@@ -256,7 +238,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    /* background: linear-gradient(to right, rgba(10, 37, 64, 0.9), rgba(10, 37, 64, 0.7)); */
+    /* background: linear-gradient(to right, rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.7)); Spotify dark gradient */
 }
 
 .hero-content {
@@ -271,6 +253,7 @@ nav {
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.2;
+    color: var(--text-color);
 }
 
 .hero-content h1 span {
@@ -293,7 +276,7 @@ nav {
     display: inline-block;
     padding: 15px 30px;
     background-color: var(--accent-color);
-    color: var(--text-color);
+    color: var(--primary-color); /* Text color for Spotify green button */
     border-radius: 30px;
     font-weight: 600;
     transition: var(--transition);
@@ -302,12 +285,14 @@ nav {
 
 .cta-button:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 20px rgba(29, 185, 84, 0.3); /* Spotify green shadow */
+    background-color: #1ED760; /* Slightly lighter green on hover */
 }
 
 .cta-button.outline {
     background-color: transparent;
     border: 2px solid var(--metallic);
+    color: var(--metallic); /* Text color for outline button */
 }
 
 .cta-button.outline:hover {
@@ -403,6 +388,7 @@ nav {
 section {
     padding: 100px 0;
     position: relative;
+    background-color: var(--primary-color); /* Ensure sections have the primary background */
 }
 
 .section-header {
@@ -416,6 +402,7 @@ section {
     margin-bottom: 20px;
     position: relative;
     display: inline-block;
+    color: var(--text-color);
 }
 
 .line {
@@ -488,7 +475,7 @@ section {
     position: relative;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); /* Darker shadow */
 }
 
 .about-image::before {
@@ -528,7 +515,7 @@ section {
     position: relative;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); /* Darker shadow */
 }
 
 .product-image::before {
@@ -632,8 +619,8 @@ section {
     left: 50%;
     width: 10px;
     height: 10px;
-    border-top: 2px solid var(--metallic);
-    border-right: 2px solid var(--metallic);
+    border-top: 2px solid var(--text-color); /* Changed to text-color for contrast */
+    border-right: 2px solid var(--text-color); /* Changed to text-color for contrast */
 }
 
 .prev-btn span {
@@ -674,13 +661,13 @@ section {
     background-color: var(--light-bg);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Darker shadow */
     transition: var(--transition);
 }
 
 .team-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); /* Even darker shadow */
 }
 
 .team-image {
@@ -704,6 +691,7 @@ section {
 .team-info h3 {
     font-size: 1.5rem;
     margin-bottom: 5px;
+    color: var(--text-color);
 }
 
 .position {
@@ -790,7 +778,7 @@ section {
     background-color: var(--light-bg);
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Darker shadow */
 }
 
 .form-group {
@@ -834,7 +822,7 @@ section {
     top: -10px;
     left: 10px;
     font-size: 0.8rem;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color); /* Match primary background */
     padding: 0 5px;
     color: var(--accent-color);
 }
@@ -843,7 +831,7 @@ section {
     display: inline-block;
     padding: 15px 30px;
     background-color: var(--accent-color);
-    color: var(--text-color);
+    color: var(--primary-color); /* Text color for Spotify green button */
     border: none;
     border-radius: 30px;
     font-weight: 600;
@@ -854,14 +842,14 @@ section {
 }
 
 .submit-btn:hover {
-    background-color: var(--secondary-color);
+    background-color: #1ED760; /* Slightly lighter green on hover */
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 20px rgba(29, 185, 84, 0.3); /* Spotify green shadow */
 }
 
 /* Footer */
 footer {
-    background-color: var(--primary-color);
+    background-color: var(--background-color); /* Use pure black for footer */
     padding: 80px 0 30px;
 }
 
@@ -908,7 +896,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding-top: 30px;
-    border-top: 1px solid rgba(203, 213, 225, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Lighter border for contrast */
 }
 
 .footer-bottom p {
@@ -931,7 +919,7 @@ footer {
     color: var(--accent-color);
 }
 
-/* Animation Classes */
+/* Animation Classes (no changes needed as they use variables) */
 .reveal-text {
     opacity: 0;
     transform: translateY(30px);
@@ -1001,7 +989,7 @@ footer {
     transform: translateX(0);
 }
 
-/* Responsive Styles */
+/* Responsive Styles (no changes needed as they use variables) */
 @media (max-width: 1024px) {
     .hero-content h1 {
         font-size: 3rem;

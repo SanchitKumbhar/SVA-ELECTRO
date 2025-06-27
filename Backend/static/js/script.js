@@ -343,27 +343,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Form submission
-    const contactForm = document.querySelector('.contact-form');
+    // const contactForm = document.querySelector('.contact-form');
     
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    // contactForm.addEventListener('submit', (e) => {
+    //     e.preventDefault();
         
-        // Simulate form submission
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalText = submitBtn.innerText;
+    //     // Simulate form submission
+    //     const submitBtn = contactForm.querySelector('.submit-btn');
+    //     const originalText = submitBtn.innerText;
         
-        submitBtn.innerText = 'Sending...';
-        submitBtn.disabled = true;
+    //     submitBtn.innerText = 'Sending...';
+    //     submitBtn.disabled = true;
         
-        setTimeout(() => {
-            submitBtn.innerText = 'Message Sent!';
-            contactForm.reset();
+    //     setTimeout(() => {
+    //         submitBtn.innerText = 'Message Sent!';
+    //         contactForm.reset();
             
-            setTimeout(() => {
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
-        }, 1500);
-    });
+    //         setTimeout(() => {
+    //             submitBtn.innerText = originalText;
+    //             submitBtn.disabled = false;
+    //         }, 2000);
+    //     }, 1500);
+    // });
 });
 

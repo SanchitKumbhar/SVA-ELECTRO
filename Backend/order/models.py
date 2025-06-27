@@ -1,8 +1,10 @@
 from django.db import models
 from products.models import Product
 from django.conf import settings
+from CustomUserModelApp.uuid import UUIDMixin
+
 # Create your models here.
-class Orders(models.Model):
+class Orders(UUIDMixin,models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Shipped', 'Shipped'),

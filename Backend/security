@@ -1,4 +1,9 @@
 1.Turn on csrf protection
 2.Check user autthentication(current django auth)
-3.Turn on only dev for api and autthentication ----done
+3.close extrenal requests
+4.decrease jwt time
+5.debug=false
+6.restrict specific user details to that user only
+7.uuid in prod --- done
+
 

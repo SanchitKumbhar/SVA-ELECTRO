@@ -21,10 +21,10 @@ class Productview(viewsets.ModelViewSet):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
     def list(self, request, *args, **kwargs):
-        data=Product.objects.all()
-        serializer=self.serializer_class(data,many=True)
-        return Response(serializer.data)
-    
+            data=Product.objects.all()
+            serializer=self.serializer_class(data,many=True)
+            return Response(serializer.data)
+
     def update(self, request,*args, **kwargs):
             partial=kwargs.pop('partial', False)
             try:

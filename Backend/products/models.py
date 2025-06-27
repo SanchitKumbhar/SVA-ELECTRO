@@ -1,9 +1,11 @@
 from django.db import models
 from django.conf import settings
 import datetime
+from CustomUserModelApp.uuid import UUIDMixin
+
 # Create your models here.
 
-class Product(models.Model):
+class Product(UUIDMixin,models.Model):
     PRODUCT_CATEGORY=[
         ("1","Electric Buses"),
         ("2,","Charging Equipment"),

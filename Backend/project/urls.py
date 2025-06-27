@@ -22,10 +22,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('CustomUserModelApp.urls')),
-    path('', include('products.urls')),
-    path('', include('productsapi.urls')),
-    path('', include('order.urls')),
-    path('', include('appointment.urls')),
+    path('api/', include('products.urls')),
+    path('api/', include('productsapi.urls')),
+    path('api/', include('order.urls')),
+    path('api/', include('appointment.urls')),
+    path('api/', include('profileapi.urls')),
 
 
 
