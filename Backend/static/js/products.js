@@ -46,7 +46,7 @@ async function fetchProducts() {
     const accessToken = tokenData.access; // Now accessToken will have the value
 
     // 2. Use the obtained accessToken in the subsequent fetch
-    const response = await fetch('http://127.0.0.1:8000/api/products/', {
+    const response = await fetch('/api/products/', {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + accessToken,
@@ -102,13 +102,13 @@ function createProductInfoModal(product) {
             <span class="product-info-stock">${product.stock} in stock</span>
           </div>
         </div>
-        
+
         <div class="product-info-content">
           <div class="info-section">
             <h4>Description</h4>
             <p>${product.description}</p>
           </div>
-          
+
           <div class="product-specs">
             <div class="spec-item">
               <div class="spec-label">Product ID</div>
@@ -127,13 +127,13 @@ function createProductInfoModal(product) {
               <div class="spec-value">${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</div>
             </div>
           </div>
-          
+
           <div class="info-section">
             <h4>Features</h4>
             <p>This premium product offers cutting-edge technology and innovative design. Perfect for modern users who demand quality and performance.</p>
           </div>
         </div>
-        
+
         <div class="product-info-actions">
           <button class="book-from-info" data-product-id="${product.id}">
             Book Appointment
@@ -177,18 +177,18 @@ async function loadProducts() {
 productGrid.addEventListener('click', function (e) {
   // View More Info
   console.log('e.target:', e.target);
-  
+
   if (e.target.classList.contains('view-info-btn')) {
     console.log("2");
-    
+
     const productId = (e.target.getAttribute('data-product-id'));
     console.log(productId);
     console.log(allProducts);
-    
+
     const product = allProducts.find(p => p.id === productId);
     if (product) {
       console.log('Product Info:', product);
-      
+
       showProductInfo(product);
     }
   }
@@ -390,7 +390,7 @@ appointmentForm.addEventListener('submit', async function (e) { // Make the even
     console.log(data);
 
     // Make the fetch POST request
-    const response = await fetch('http://127.0.0.1:8000/api/appointment/', {
+    const response = await fetch('/api/appointment/', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + accessToken, // accessToken is now guaranteed to be available

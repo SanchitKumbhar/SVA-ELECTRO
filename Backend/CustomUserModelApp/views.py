@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, authenticate, login 
+from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
@@ -23,7 +23,7 @@ def signup_view(request, id):
     user = User.objects.create_user(email=email, password=password, phonenumber=phonenumber)
     # Optional user-type specific models
     if id == 1:
-        
+
         fullname = request.POST.get('fullname')
         print(fullname)
         Client.objects.create(login=user, fullname=fullname, phone_number=phonenumber)
@@ -72,9 +72,9 @@ def get_jwt_token(request):
         })
     else:
         return JsonResponse({
-            'message' : "Invalid Data" 
+            'message' : "Invalid Data"
         })
-    
+
 
 @login_required
 def products(request):
@@ -103,7 +103,7 @@ def contact(request):
 
     Contact.objects.create(fullname=fullname,email=email,company=company,message=message)
 
-    return redirect("/page/")
+    return redirect("/")
 
 def update_profile(request):
     return render(request,"userProfile.html")
