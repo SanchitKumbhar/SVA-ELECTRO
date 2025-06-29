@@ -511,39 +511,6 @@ async function check(params) {
   }
 }
 
-async function fetchContacts() {
-    const jwt = await fetchJWTToken();
-    if (!jwt) return;
-
-    try {
-        const res = await fetch('/api/contacts/', {
-            headers: {
-                'Authorization': `Bearer ${jwt}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!res.ok) throw new Error('Contacts fetch failed');
-
-        const data = await res.json();
-
-        const tbody = document.querySelector('#contacts-table tbody');
-        tbody.innerHTML = '';
-        data.forEach(contact => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${contact.id}</td>
-                <td>${contact.fullname}</td>
-                <td>${contact.email}</td>
-                <td>${contact.company}</td>
-                <td>${contact.message}</td>
-            `;
-            tbody.appendChild(row);
-        });
-    } catch (err) {
-        console.error("Failed to fetch contacts:", err);
-    }
-}
 
 // Trigger when navigating to contacts tab
 document.querySelector('[data-page="contacts"]').addEventListener('click', () => {

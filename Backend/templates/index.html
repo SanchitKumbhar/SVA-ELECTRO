@@ -31,9 +31,20 @@
                 <li><a href="#team">Team</a></li>
                 <li><a href="#contact">Contact</a></li>
                 {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                <li><a href="/dashboard">Dashboard</a></li>
                 <li>{{ request.user.email }}</li>
+                <li><a href="/profile-page">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+
+                {% else %}
+                <li>{{ request.user.email }}</li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/profile-page">Profile</a></li>
+                {% endif %}
                 {% else %}
                 <li><a href="/auth">Login/Register</a></li>
+
                 {% endif %}
             </ul>
             <div class="hamburger">

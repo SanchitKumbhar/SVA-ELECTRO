@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model, authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
@@ -83,6 +83,9 @@ def products(request):
 def authpage(request):
     return render(request,"authentication.html")
 
+def log_out(request):
+    logout(request)
+    return redirect("/")
 
 def index(request):
     return render(request,"index.html")

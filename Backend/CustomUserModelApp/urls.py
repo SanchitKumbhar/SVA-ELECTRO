@@ -10,8 +10,8 @@ urlpatterns = [
     path('login/user', views.login_view,name="login"),
     path('get-jwt', views.get_jwt_token,name="jwt-token"),
     path('contact', views.contact,name="contact"),
-    path('update-profile', views.update_profile,name="update-profile"),
-
+    path('profile-page', views.update_profile,name="update-profile"),
+    path("logout",views.log_out,name="logout")
 
 
 ]
