@@ -193,6 +193,56 @@ nav {
     cursor: pointer;
 }
 
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-icon {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: rgba(18, 18, 18, 0.95);
+    border-radius: 5px;
+    min-width: 120px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+}
+
+.dropdown-menu li {
+    width: 100%;
+}
+
+.dropdown-menu li a,
+.dropdown-menu li button {
+    display: block;
+    padding: 10px 15px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 0.9rem;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li button:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+
 .hamburger span {
     display: block;
     width: 100%;

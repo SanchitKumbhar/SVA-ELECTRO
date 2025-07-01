@@ -21,22 +21,38 @@
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </li>
+
                     <li class="nav-item" data-page="orders">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Orders</span>
                     </li>
+                    
                     <li class="nav-item" data-page="products">
                         <i class="fas fa-bus"></i>
                         <span>Products</span>
                     </li>
+
                     <li class="nav-item" data-page="add-product">
                         <i class="fas fa-plus-circle"></i>
                         <span>Add Product</span>
                     </li>
+
                     <li class="nav-item" data-page="appointments">
                         <i class="fas fa-calendar-check"></i>
                         <span>Appointments</span>
                     </li>
+
+                    <li class="nav-item" data-page="manage-contacts">
+                        <i class="fas fa-envelope"></i>
+                        <span>Manage Contacts</span>
+                    </li>
+
+
+                    <li class="nav-item" data-page="manage-orders">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Manage Orders</span>
+                    </li>
+
 
                 </ul>
             </nav>
@@ -370,6 +386,29 @@
                 </section>
 
 
+                <section id="manage-contacts" class="page">
+                    <h1>Contact Requests</h1>
+
+                    <div class="table-container">
+                        <table class="data-table" id="contacts-table">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Company</th>
+                                    <th>Message</th>
+                                    <th>Date/Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Contact messages will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+
+
                                 <!-- Appointments Page -->
                 <section id="appointments" class="page">
                     <h1>Product Appointments</h1>
@@ -396,6 +435,75 @@
                         </table>
                     </div>
                 </section>
+
+
+                <section id="manage-orders" class="page">
+                    <h1>Order Management</h1>
+
+                    <form id="order-form" class="order-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="order-name">Order Name</label>
+                                <input type="text" id="order-name" placeholder="Enter order name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="order-quantity">Quantity</label>
+                                <input type="number" id="order-quantity" placeholder="Enter quantity" min="1" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customer-name">Customer Name</label>
+                                <input type="text" id="customer-name" placeholder="Enter customer name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customer-phone">Customer Mobile No.</label>
+                                <input type="tel" id="customer-phone" placeholder="Enter mobile number" required pattern="[0-9]{10}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="delivery-address">Delivery Address</label>
+                                <textarea id="delivery-address" placeholder="Enter delivery address" rows="2" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="order-remarks">Order Status</label>
+                                <select id="order-remarks" required>
+                                    <option value="">Select status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Confirmed">Confirmed</option>
+                                    <option value="In Development">In Development</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Add Order</button>
+                            <button type="reset" class="btn-secondary">Reset</button>
+                        </div>
+                    </form>
+
+                    <div class="table-container">
+                        <table class="data-table" id="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order Name</th>
+                                    <th>Quantity</th>
+                                    <th>Customer Name</th>
+                                    <th>Mobile No.</th>
+                                    <th>Address</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Orders will appear here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
 
 
                 <!-- Edit Product Modal -->
@@ -468,5 +576,6 @@
 
 
     <script src="script.js"></script>
+    <script src="manageOrder.js"></script>
 </body>
 </html>
