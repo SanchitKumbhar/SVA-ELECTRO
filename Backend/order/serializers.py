@@ -15,11 +15,10 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Orders.objects.create(**validated_data)
-        
+
     def update(self, instance, validated_data):
-        instance.customer_name = validated_data.get("customer_name", instance.customer_name)
-        instance.product_name = validated_data.get("product_name", instance.product_name)
-        instance.quantity = validated_data.get("quantity", instance.quantity)
-        instance.status = validated_data.get("status", instance.status)
+        # Only update fields present in validated_data (supports partial update)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
         instance.save()
         return instance

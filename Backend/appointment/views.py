@@ -55,15 +55,11 @@ class AppointmentViewClass(viewsets.ModelViewSet):
         instance = self.get_object()
         print(instance)
         allowed_fields = [
-            "product",
-            "vehicleimage",
-            "modelname",
+            "fullname",
             "description",
-            "qty",
             "user",
             "fromappointmentdate",
             "toappointmentdate",
-            "slot",
             "location",
             "purpose",
             "message"

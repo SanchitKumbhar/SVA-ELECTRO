@@ -13,14 +13,11 @@ class AppointmentSerializer(serializers.ModelSerializer):
             return AppointmentModel.objects.create(validate_data)
         
         def update(self,instance,validate_data):
-            instance.product=validate_data.get("product",instance.product)
-            instance.modelname=validate_data.get("modelname",instance.modelname)
+            instance.fullname=validate_data.get("fullname",instance.fullname)
             instance.description=validate_data.get("description",instance.description)
-            instance.qty=validate_data.get("qty",instance.qty)
             instance.user=validate_data.get("user",instance.user)
             instance.fromappointmentdate=validate_data.get("fromappointmentdate",instance.fromappointmentdate)
             instance.toappointmentdate=validate_data.get("toappointmentdate",instance.toappointmentdate)
-            instance.slot=validate_data.get("slot",instance.slot)
             instance.location=validate_data.get("location",instance.location)
             instance.purpose=validate_data.get("purpose",instance.purpose)
             instance.message=validate_data.get("message",instance.message)

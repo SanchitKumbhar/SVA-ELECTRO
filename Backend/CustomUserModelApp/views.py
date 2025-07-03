@@ -62,19 +62,16 @@ def login_view(request):
 # ✅ JWT Token generation for form-based API use (call this after login)
 def get_jwt_token(request):
     user = request.user
-    print(user)
-    if user is not "AnonymousUser":
+    if user != "AnonymousUser":  # Correct way is: if request.user.is_authenticated:
         refresh = RefreshToken.for_user(user)
-        print(refresh.access_token)
         return JsonResponse({
             'access': str(refresh.access_token),
             'refresh': str(refresh)
         })
     else:
         return JsonResponse({
-            'message' : "Invalid Data"
+            'message': "Invalid Data"
         })
-
 
 @login_required
 def products(request):

@@ -1,4 +1,4 @@
-        * {
+* {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
@@ -289,6 +289,33 @@
           background: var(--spotify-green);
           color: var(--spotify-black);
           transform: scale(1.02);
+        }
+
+        /* Buy Now Button Styles */
+        .buy-now-btn,
+        .buy-from-info {
+          background: #1DB954;
+          color: #fff;
+          border: none;
+          border-radius: 24px;
+          padding: 0.7rem 2rem;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+          box-shadow: 0 2px 8px rgba(29, 185, 84, 0.08);
+          margin-top: 0.5rem;
+          margin-bottom: 0.5rem;
+          outline: none;
+          display: inline-block;
+        }
+
+        .buy-now-btn:hover,
+        .buy-from-info:hover {
+          background: #17a74a;
+          color: #fff;
+          transform: translateY(-2px) scale(1.04);
+          box-shadow: 0 6px 24px rgba(29, 185, 84, 0.18);
         }
 
         /* Overlay and Modal */

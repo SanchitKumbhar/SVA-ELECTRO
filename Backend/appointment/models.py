@@ -6,16 +6,18 @@ from CustomUserModelApp.uuid import UUIDMixin
 # Create your models here.
 
 class AppointmentModel(UUIDMixin,models.Model):
-    product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    modelname=models.CharField(max_length=50)
+    CHOICES=[
+        ("1","Consultaion"),
+        ("1","Bussiness Meeting"),
+        ("1","Other"),
+    ]
+    fullname=models.CharField(max_length=50)
+    purpose=models.CharField(choices=CHOICES,max_length=50)
     description=models.TextField()
-    qty=models.IntegerField()
-    # Enable this after completing the jwt auth in frontend
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     fromappointmentdate=models.DateField(null=True)
     toappointmentdate=models.DateField(null=True)
     location=models.CharField(max_length=50)
-    purpose=models.CharField(max_length=50)
     message=models.TextField()
 
 

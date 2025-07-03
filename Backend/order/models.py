@@ -11,7 +11,7 @@ class Orders(UUIDMixin,models.Model):
         ('Delivered', 'Delivered'),
         ('Cancelled', 'Cancelled'),
     ]
-    order_id = models.CharField(max_length=255, unique=True)
+    order_id = models.CharField(max_length=255, unique=True,null=True)
     customer_name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product_name = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
