@@ -118,3 +118,22 @@ class AppointmentViewClass(viewsets.ModelViewSet):
 
 
     
+class ConfirmAppointmentView(viewsets.ModelViewSet):
+    permission_classes=[IsAuthenticated]
+    serializer_class=ConfirmAppSerializer
+    queryset = ConfirmedAppointment.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+        serializer = self.serializer_class(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def  list(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            data = ConfirmedAppointment.objects.all()
+            serializer = self.serializer_class(data, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"message": "You are not authorized to view this data"}, status=status.HTTP_403_FORBIDDEN)

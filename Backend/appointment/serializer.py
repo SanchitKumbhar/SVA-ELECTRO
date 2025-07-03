@@ -23,6 +23,18 @@ class AppointmentSerializer(serializers.ModelSerializer):
             instance.message=validate_data.get("message",instance.message)
 
 class ConfirmAppSerializer(serializers.ModelSerializer):
+    user=serializers.CharField(source="appointmentcompanyuser.user",read_only=True)
+    location=serializers.CharField(source="appointmentcompanyuser.location",read_only=True)
+    purpose=serializers.CharField(source="appointmentcompanyuser.purpose",read_only=True)
+    fullname=serializers.CharField(source="appointmentcompanyuser.fullname",read_only=True)
+    
+
     class Meta:
         model=ConfirmedAppointment
         fields="__all__"
+    
+    def update(self, instance, validated_data):
+        for attr,value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
