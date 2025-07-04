@@ -1,21 +1,49 @@
-const contactsTable = document.getElementById('contacts-table').querySelector('tbody');
+const contactsTableBody = document.getElementById('contacts-table').querySelector('tbody');
 
-// Example to simulate incoming contact request
-function addContact(name, email, company, message) {
-    const row = document.createElement('tr');
-    const now = new Date();
-    const dateTime = now.toLocaleString();
+/**
+ * Renders contact data to the table
+ * @param {Array} contactsArray - Parsed array of contact objects
+ */
+function renderContacts(contactsArray) {
+  let tableRows = '';
 
-    row.innerHTML = `
-        <td>${name}</td>
+  contactsArray.forEach(contact => {
+    const { fullname, email, company, message } = contact.fields;
+    const now = new Date().toLocaleString();
+
+    tableRows += `
+      <tr>
+        <td>${fullname}</td>
         <td>${email}</td>
         <td>${company}</td>
         <td>${message}</td>
-        <td>${dateTime}</td>
+        <td>${now}</td>
+      </tr>
     `;
+  });
 
-    contactsTable.appendChild(row);
+  contactsTableBody.innerHTML = tableRows;
 }
 
-// Example Usage
-addContact('John Doe', 'john@example.com', 'Tech Corp', 'Interested in partnership.');
+/**
+ * Fetch contact data from API and render
+ */
+function loadContacts() {
+  fetch('https://sanchitkumbhar.pythonanywhere.com/get-contacts')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      const contactsArray = JSON.parse(data.data);
+      renderContacts(contactsArray);
+    })
+    .catch(error => {
+      console.error('Failed to load contacts:', error);
+    });
+}
+
+// Initial load
+loadContacts();
