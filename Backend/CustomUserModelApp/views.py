@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Client, PrivateBussines, GovernmentDetails
+from .models import Client, PrivateBussines, GovernmentDetails,Contact
 
 User = get_user_model()
 
@@ -105,5 +105,15 @@ def contact(request):
 
     return redirect("/")
 
+from django.core import serializers
+def get_contacts(request):
+    # if request.user.is_superuser:
+        return JsonResponse({
+            'data' : serializers.serialize("json",Contact.objects.all())
+        })
+    # else:
+    #     return JsonResponse({
+    #         "error" : "invalid user permissions"
+    #     })
 def update_profile(request):
     return render(request,"userProfile.html")

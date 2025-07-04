@@ -11,7 +11,8 @@ urlpatterns = [
     path('get-jwt', views.get_jwt_token,name="jwt-token"),
     path('contact', views.contact,name="contact"),
     path('profile-page', views.update_profile,name="update-profile"),
-    path("logout",views.log_out,name="logout")
+    path("logout",views.log_out,name="logout"),
+    path("get-contacts", views.get_contacts, name="get-contacts")
 
 
 ]
