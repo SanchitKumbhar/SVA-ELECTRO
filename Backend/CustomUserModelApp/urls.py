@@ -12,8 +12,7 @@ urlpatterns = [
     path('contact', views.contact,name="contact"),
     path('profile-page', views.update_profile,name="update-profile"),
     path("logout",views.log_out,name="logout"),
-    path("get-contacts", views.get_contacts, name="get-contacts")
-
-
+    path("get-contacts", views.get_contacts, name="get-contacts"),
+    path("payment-page", views.paymentpage, name="payment-page"),
 ]   
 

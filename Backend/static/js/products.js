@@ -171,11 +171,12 @@ productGrid.addEventListener('click', function (e) {
     }
   }
   // Buy Now
-  if (e.target.classList.contains('buy-now-btn')) {
-    const productId = e.target.getAttribute('data-product-id');
-    // Implement your buy logic here
-    alert(`Buy Now clicked for product ID: ${productId}`);
-  }
+ if (e.target.classList.contains('buy-now-btn')) {
+  const productId = e.target.getAttribute('data-product-id');
+  console.log("Buy Now clicked for Product ID:", productId);  // ✅ Log here
+  window.location.href = `/payment-page?product_id=${encodeURIComponent(productId)}`;
+}
+
 });
 
 // Buy from info modal button
@@ -183,7 +184,10 @@ document.addEventListener('click', function (e) {
   if (e.target.classList.contains('buy-from-info')) {
     const productId = e.target.getAttribute('data-product-id');
     closeProductInfoModalFunc();
-    setTimeout(() => alert(`Buy Now clicked for product ID: ${productId}`), 50);
+    setTimeout(() => {
+      // Redirect to payment page with product ID as query param
+      window.location.href = `/payment-page?product_id=${encodeURIComponent(productId)}`;
+    }, 50);
   }
 });
 

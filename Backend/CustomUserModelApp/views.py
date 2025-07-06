@@ -117,3 +117,6 @@ def get_contacts(request):
     #     })
 def update_profile(request):
     return render(request,"userProfile.html")
+
+def paymentpage(request):
+    return render(request,"payment.html")
