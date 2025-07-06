@@ -25,6 +25,7 @@ class UpdateProfileView(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'], url_path='change-password')
     def change_password(self, request):
+        print(request.data)
         serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()

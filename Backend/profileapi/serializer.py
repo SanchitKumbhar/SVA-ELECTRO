@@ -9,8 +9,9 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(required=True)
 
     def validate_new_password(self, value):
-        if len(value) < 8:
-            raise serializers.ValidationError("New password must be at least 8 characters long")
+        user = self.context['request'].user
+        if not user.check_password(self.initial_data.get("current_password")):
+            raise serializers.ValidationError("wrong old  password!!!")
         return value
 
     def save(self, **kwargs):

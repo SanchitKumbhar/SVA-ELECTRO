@@ -1,4 +1,4 @@
-        // currentUser will be populated dynamically from the fetch request.
+// currentUser will be populated dynamically from the fetch request.
 let currentUser = null; 
 let originalData = {}; 
 
@@ -356,13 +356,13 @@ function showSection(sectionName) {
 /**
  * Simulates a logout process.
  */
-function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-        alert('Logged out successfully! Redirecting to login page...');
-        // In a real app, you would clear local storage/cookies and redirect to the login page.
-        console.log('User logged out');
-    }
-}
+// function logout() {
+//     if (confirm('Are you sure you want to logout?')) {
+//         alert('Logged out successfully! Redirecting to login page...');
+//         // In a real app, you would clear local storage/cookies and redirect to the login page.
+//         console.log('User logged out');
+//     }
+// }
 
 // --- API Calls and Initial Page Load ---
 
@@ -511,5 +511,58 @@ function loadUserProfile(userData) {
         // Optionally, display an error message to the user, or redirect them.
     }
 })();
+
+// Add this function to handle password change
+async function changePassword() {
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        alert("Please fill in all password fields.");
+        return;
+    }
+    if (newPassword !== confirmPassword) {
+        alert("New passwords do not match.");
+        return;
+    }
+    // if (newPassword.length < 8) {
+    //     alert("New password must be at least 8 characters long.");
+    //     return;
+    // }
+
+    const token = await fetchJWTToken();
+    if (!token) {
+        alert("Authentication error. Please log in again.");
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/profile/change-password/', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                current_password: currentPassword,
+                new_password: newPassword
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Failed to change password.");
+        }
+
+        alert("Password changed successfully!");
+        // Optionally clear fields
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+    } catch (error) {
+        alert("Error changing password: " + error.message);
+    }
+}
 
 
