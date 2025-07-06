@@ -1,16 +1,16 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SWA - Electro Admin Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/adminstyle.css' %}">
+    <link rel="stylesheet" href={% static "css/adminstyle.css" %}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="admin-container">
+<div class="admin-container">
         <!-- Sidebar -->
+        <body>
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>SWA - Electro</h2>
@@ -22,30 +22,34 @@
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </li>
-                    <li class="nav-item" data-page="orders">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Orders</span>
-                    </li>
+
                     <li class="nav-item" data-page="products">
                         <i class="fas fa-bus"></i>
                         <span>Products</span>
                     </li>
+
                     <li class="nav-item" data-page="add-product">
                         <i class="fas fa-plus-circle"></i>
                         <span>Add Product</span>
                     </li>
+
                     <li class="nav-item" data-page="appointments">
                         <i class="fas fa-calendar-check"></i>
                         <span>Appointments</span>
                     </li>
+
                     <li class="nav-item" data-page="manage-contacts">
                         <i class="fas fa-envelope"></i>
                         <span>Manage Contacts</span>
                     </li>
+
+
                     <li class="nav-item" data-page="manage-orders">
                         <i class="fas fa-file-alt"></i>
                         <span>Manage Orders</span>
                     </li>
+
+
                 </ul>
             </nav>
         </aside>
@@ -174,142 +178,6 @@
                     </div>
                 </section>
 
-                <!-- Orders Page -->
-                <section id="orders" class="page">
-                    <h1>Track Orders</h1>
-                    <div class="filter-container">
-                        <div class="search-filter">
-                            <input type="text" id="order-search" placeholder="Search by customer or order ID">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <div class="status-filter">
-                            <label for="status-select">Filter by Status:</label>
-                            <select id="status-select">
-                                <option value="all">All</option>
-                                <option value="pending">Pending</option>
-                                <option value="shipped">Shipped</option>
-                                <option value="delivered">Delivered</option>
-                                <option value="cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table" id="orders-table">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer Name</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Status</th>
-                                    <th>Order Date</th>
-                                    <th>Total Price</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#ORD-5289</td>
-                                    <td>John Smith</td>
-                                    <td>SWA - Electro Model X</td>
-                                    <td>1</td>
-                                    <td><span class="status pending">Pending</span></td>
-                                    <td>2023-04-15</td>
-                                    <td>$125,000</td>
-                                    <td>
-                                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-5288</td>
-                                    <td>Sarah Johnson</td>
-                                    <td>SWA - Electro Charger Pro</td>
-                                    <td>1</td>
-                                    <td><span class="status shipped">Shipped</span></td>
-                                    <td>2023-04-14</td>
-                                    <td>$2,500</td>
-                                    <td>
-                                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-5287</td>
-                                    <td>Metro Transit</td>
-                                    <td>SWA - Electro Fleet</td>
-                                    <td>5</td>
-                                    <td><span class="status delivered">Delivered</span></td>
-                                    <td>2023-04-12</td>
-                                    <td>$750,000</td>
-                                    <td>
-                                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-5286</td>
-                                    <td>Green City Tours</td>
-                                    <td>SWA - Electro Model S</td>
-                                    <td>1</td>
-                                    <td><span class="status delivered">Delivered</span></td>
-                                    <td>2023-04-10</td>
-                                    <td>$180,000</td>
-                                    <td>
-                                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-5285</td>
-                                    <td>EcoTransit Solutions</td>
-                                    <td>SWA - Electro Model X</td>
-                                    <td>2</td>
-                                    <td><span class="status shipped">Shipped</span></td>
-                                    <td>2023-04-08</td>
-                                    <td>$250,000</td>
-                                    <td>
-                                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-5284</td>
-                                    <td>Urban Mobility Inc.</td>
-                                    <td>SWA - Electro Charging Station</td>
-                                    <td>3</td>
-                                    <td><span class="status pending">Pending</span></td>
-                                    <td>2023-04-07</td>
-                                    <td>$15,000</td>
-                                    <td>
-                                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-5283</td>
-                                    <td>Clean Energy Transport</td>
-                                    <td>SWA - Electro Model S</td>
-                                    <td>1</td>
-                                    <td><span class="status cancelled">Cancelled</span></td>
-                                    <td>2023-04-05</td>
-                                    <td>$180,000</td>
-                                    <td>
-                                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
-                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="pagination">
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
-                        <button class="page-btn">Next</button>
-                    </div>
-                </section>
-
                 <!-- Products Page -->
 
 
@@ -317,6 +185,8 @@
                 <section id="products" class="page">
                     <div class="products-grid" id="products-grid"></div>
                 </section>
+
+
 
                 <!-- Add Product Page -->
                 <section id="add-product" class="page">
@@ -375,28 +245,30 @@
                     </form>
                 </section>
 
-                <section id="manage-contacts" class="page">
-                    <h1>Contact Requests</h1>
 
-                    <div class="table-container">
-                        <table class="data-table" id="contacts-table">
-                            <thead>
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Company</th>
-                                    <th>Message</th>
-                                    <th>Date/Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Contact messages will be inserted here -->
-                            </tbody>
-                        </table>
-                    </div>
+                <section id="manage-contacts" class="page">
+                <h1>Contact Requests</h1>
+
+                <div class="table-container">
+                    <table class="data-table" id="contacts-table">
+                    <thead>
+                        <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Company</th>
+                        <th>Message</th>
+                        <th>Date/Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Contact messages will be inserted here -->
+                    </tbody>
+                    </table>
+                </div>
                 </section>
 
-                <!-- Appointments Page -->
+
+                                <!-- Appointments Page -->
                 <section id="appointments" class="page">
                     <h1>Product Appointments</h1>
                     <div class="table-container">
@@ -423,39 +295,33 @@
                     </div>
                 </section>
 
+
+                <!-- ORDER MANAGEMENT SECTION -->
+
                 <section id="manage-orders" class="page">
                     <h1>Order Management</h1>
 
                     <form id="order-form" class="order-form">
                         <div class="form-row">
+                            
                             <div class="form-group">
-                                <label for="order-name">Order Name</label>
-                                <input type="text" id="order-name" placeholder="Enter order name" required>
+                                <label for="product-name">Product Name (ID)</label>
+                                <input type="text" id="product-name" placeholder="Enter product ID" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="order-quantity">Quantity</label>
-                                <input type="number" id="order-quantity" placeholder="Enter quantity" min="1" required>
+                                <label for="quantity">Quantity</label>
+                                <input type="number" id="quantity" placeholder="Enter quantity" min="1" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="customer-name">Customer Name</label>
-                                <input type="text" id="customer-name" placeholder="Enter customer name" required>
+                                <label for="customer-name">Customer Name (ID)</label>
+                                <input type="text" id="customer-name" placeholder="Enter customer ID" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="customer-phone">Customer Mobile No.</label>
-                                <input type="tel" id="customer-phone" placeholder="Enter mobile number" required pattern="[0-9]{10}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="delivery-address">Delivery Address</label>
-                                <textarea id="delivery-address" placeholder="Enter delivery address" rows="2" required></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="order-remarks">Order Status</label>
-                                <select id="order-remarks" required>
+                                <label for="status">Order Status</label>
+                                <select id="status" required>
                                     <option value="">Select status</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Confirmed">Confirmed</option>
@@ -463,6 +329,12 @@
                                     <option value="Completed">Completed</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="order-id">Parent Order ID (optional)</label>
+                                <input type="text" id="order-id" placeholder="Enter parent order ID">
+                            </div>
+
                         </div>
 
                         <div class="form-actions">
@@ -475,12 +347,13 @@
                         <table class="data-table" id="orders-table">
                             <thead>
                                 <tr>
-                                    <th>Order Name</th>
+                                    <th>ID</th>
+                                    <th>Parent Order ID</th>
+                                    <th>Product Name (ID)</th>
                                     <th>Quantity</th>
-                                    <th>Customer Name</th>
-                                    <th>Mobile No.</th>
-                                    <th>Address</th>
+                                    <th>Customer Name (ID)</th>
                                     <th>Status</th>
+                                    <th>Order Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -489,6 +362,8 @@
                         </table>
                     </div>
                 </section>
+
+
 
                 <!-- Edit Product Modal -->
                 <div id="edit-product-modal" class="modal">
@@ -556,8 +431,6 @@
             </div>
         </main>
     </div>
-
-
 
     <script src={% static "js/adminscript.js" %}></script>
     <script src={% static "js/manageOrder.js" %}></script>

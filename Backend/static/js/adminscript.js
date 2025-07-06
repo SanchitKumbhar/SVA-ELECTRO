@@ -496,7 +496,7 @@ async function check(params) {
       headers: {
         'Authorization': `Bearer ${jwt}`,
         'Content-Type': 'application/json'
-      },
+      },  
       method: 'GET'
     });
 
@@ -513,6 +513,6 @@ async function check(params) {
 
 
 // Trigger when navigating to contacts tab
-document.querySelector('[data-page="contacts"]').addEventListener('click', () => {
+document.querySelector('[data-page="manage-contacts"]').addEventListener('click', () => {
     fetchContacts();
 });

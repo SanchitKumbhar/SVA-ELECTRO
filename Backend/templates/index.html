@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
     {% load static %}
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SWA Electric - Premium E-Buses</title>
-    <link rel="stylesheet" href={% static "css/style.css" %}>
+    <link rel="stylesheet" href= {% static "css/style.css" %}>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -31,22 +31,35 @@
                 <li><a href="#team">Team</a></li>
                 <li><a href="#contact">Contact</a></li>
                 {% if request.user.is_authenticated %}
-                {% if request.user.is_superuser %}
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li>{{ request.user.email }}</li>
-                <li><a href="/profile-page">Profile</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <!-- Profile Dropdown -->
+                 {% if request.user.is_superuser %}
+                                 <li class="profile-dropdown">
+                    <div class="profile-icon" id="profileToggle">Profile</div>
+                    <ul class="dropdown-menu" id="profileMenu">
+                        <li><a href="/profile-page">Profile section</a></li>
 
+                        <li><a href="/dashboard">Dashboard</a></li>
+                        <a href="/logout"><li><button id="logoutBtn">Logout</button></li></a>
+                    </ul>
+                </li> 
                 {% else %}
-                <li>{{ request.user.email }}</li>
-                <li><a href="/logout">Logout</a></li>
-                <li><a href="/profile-page">Profile</a></li>
-                {% endif %}
+                <li class="profile-dropdown">
+                    <div class="profile-icon" id="profileToggle">Profile</div>
+                    <ul class="dropdown-menu" id="profileMenu">
+                        <li><a href="/profile-page">Profile section</a></li>
+                        <a href="/logout"><li><button id="logoutBtn">Logout</button></li></a>
+                    </ul>
+                </li>     
+                 {% endif %}
                 {% else %}
                 <li><a href="/auth">Login/Register</a></li>
 
                 {% endif %}
+                
+
+
             </ul>
+
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -282,7 +295,6 @@
                         </div>
                     </div>
                     <form class="contact-form reveal-form" action="/contact" method="post">
-                        {% csrf_token %}
                         <div class="form-group">
                             <input type="text" id="name" name="fullname" required>
                             <label for="name">Full Name</label>
@@ -354,9 +366,7 @@
         </div>
     </footer>
 
-    <script src={% static "js/script.js" %}></script>
+    <script src= {% static "js/script.js" %}></script>
+    <script src= {% static "js/navbar.js" %}></script>
 </body>
 </html>
-
-
-
