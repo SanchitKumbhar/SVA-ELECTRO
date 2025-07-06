@@ -120,7 +120,7 @@ SIMPLE_JWT = {
 }
 
 
-LOGIN_URL = '/login/user/'
+LOGIN_URL = '/auth'
 
 
 # Password validation
