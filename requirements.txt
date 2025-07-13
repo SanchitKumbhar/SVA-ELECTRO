@@ -3,3 +3,4 @@ djangorestframework
 pillow
 djangorestframework-simplejwt
 bcrypt
+gunicorn
