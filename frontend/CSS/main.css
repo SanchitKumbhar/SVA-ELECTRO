@@ -189,8 +189,17 @@ nav {
     flex-direction: column;
     justify-content: space-between;
     width: 30px;
-    height: 20px;
+    height: 22px;
     cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: var(--text-color);
+    border-radius: 2px;
+    transition: 0.3s;
 }
 
 .profile-dropdown {
@@ -198,24 +207,63 @@ nav {
 }
 
 .profile-icon {
-    font-size: 1.2rem;
-    color: var(--text-color);
-    cursor: pointer;
     display: flex;
     align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 0 10px;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    height: 100%;
+}
+
+.profile-icon:hover, .profile-icon.active {
+    background: none;
+    color: var(--accent-color);
+}
+
+.profile-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color);
+    background: #fff;
+}
+
+.profile-name {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-arrow {
+    margin-left: 2px;
+    transition: transform 0.3s;
+}
+
+.profile-icon.active .dropdown-arrow {
+    transform: rotate(180deg);
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 35px;
+    top: 100%;
     right: 0;
-    background-color: rgba(18, 18, 18, 0.95);
-    border-radius: 5px;
-    min-width: 120px;
+    min-width: 160px;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
     display: none;
     flex-direction: column;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     z-index: 200;
+}
+
+.profile-dropdown .dropdown-menu.show {
+    display: flex;
 }
 
 .dropdown-menu li {
@@ -225,30 +273,25 @@ nav {
 .dropdown-menu li a,
 .dropdown-menu li button {
     display: block;
-    padding: 10px 15px;
-    text-align: left;
+    padding: 12px 20px;
     background: none;
     border: none;
     color: var(--text-color);
     width: 100%;
     cursor: pointer;
-    transition: background 0.3s;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    text-align: left;
+    transition: color 0.2s;
 }
 
 .dropdown-menu li a:hover,
 .dropdown-menu li button:hover {
-    background-color: var(--accent-color);
-    color: #fff;
+    color: var(--accent-color);
+    background: none;
 }
 
-
-.hamburger span {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: var(--text-color);
-    transition: var(--transition);
+.dropdown-menu li:not(:last-child) {
+    border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
 .hero {
