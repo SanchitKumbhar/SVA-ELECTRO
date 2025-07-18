@@ -2,6 +2,41 @@
 let currentUser = null; 
 let originalData = {}; 
 
+
+// --- Mobile Sidebar Toggle Logic ---
+const menuToggle = document.getElementById("menuToggle");
+const sidebar = document.getElementById("sidebar");
+
+menuToggle.addEventListener("click", () => {
+sidebar.classList.toggle("open");
+});
+
+// Optional: close sidebar when clicking outside (mobile only)
+document.addEventListener("click", function (e) {
+if (
+    window.innerWidth <= 768 &&
+    sidebar.classList.contains("open") &&
+    !sidebar.contains(e.target) &&
+    !menuToggle.contains(e.target)
+) {
+    sidebar.classList.remove("open");
+}
+});
+
+// scroll to sidebar when opened
+hamburger.addEventListener("click", () => {
+  sidebar.classList.toggle("active");
+
+  if (sidebar.classList.contains("active")) {
+    sidebar.scrollIntoView({ behavior: "smooth" });
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+
+
+
 // Field configurations remain the same as they describe the *desired* structure
 // and how to access fields using dot notation (e.g., 'client_details.fullname').
 const roleFields = {
