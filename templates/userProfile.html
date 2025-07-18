@@ -5,12 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile - Spotify Theme</title>
-<link rel="stylesheet" href={% static "css/profile.css" %}>
+    <link rel="stylesheet" href={% static "css/profile.css" %}>
+    <!-- <link rel="stylesheet" href="/static/css/profile.css"> -->
 </head>
 <body>
     <div class="container">
         <!-- Sidebar Navigation -->
-        <nav class="sidebar">
+
+        <button id="menuToggle" class="hamburger">
+        ☰
+        </button>
+
+        <nav class="sidebar" id="sidebar">
             <h2>Profile</h2>
             <button class="nav-item active" onclick="showSection('profile')">
                 <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
@@ -46,41 +52,42 @@
             </div>
 
             <!-- Profile Section -->
-            <section id="profileSection">
-                <!-- Profile Header -->
-                <div class="profile-header">
-                    <div class="profile-avatar" id="profileAvatar">👤</div>
-                    <div class="profile-info">
-                        <h1 id="profileName">John Doe</h1>
-                        <span class="profile-role" id="profileRole">Client User</span>
-                    </div>
+            <section id="profileSection" class="profile-container">
+            <!-- Profile Header (Redesigned Layout) -->
+            <div class="profile-header">
+                <div class="profile-avatar">👤</div>
+                <div class="profile-info">
+                <h1 id="profileName">John Doe</h1>
+                <span class="profile-role" id="profileRole">Client User</span>
                 </div>
+            </div>
 
-                <!-- Dynamic Profile Form -->
-                <div id="profileForm" class="form-section">
-                    <h3 id="formTitle">👤 Personal Information</h3>
-                    <div class="form-grid" id="formFields">
-                        
-                        <!-- Fields will be dynamically populated based on user role -->
-                    </div>
+            <!-- Profile Form Section -->
+            <div class="form-section">
+                <h3 id="formTitle">👤 Personal Information</h3>
+                <div class="form-grid" id="formFields">
+                <!-- Fields will be dynamically populated -->
                 </div>
+            </div>
 
-                <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <button class="btn btn-primary"  onclick="saveChanges()">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
-                        </svg>
-                        Save Changes
-                    </button>
-                    <button class="btn btn-secondary" onclick="cancelChanges()">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
-                        </svg>
-                        Cancel
-                    </button>
-                </div>
+            <!-- Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="saveChanges()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+                </svg>
+                Save Changes
+                </button>
+                <button class="btn btn-secondary" onclick="cancelChanges()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
+                </svg>
+                Cancel
+                </button>
+            </div>
             </section>
+
+
 
             <!-- Password Section -->
             <section id="passwordSection" class="hidden">
@@ -119,53 +126,73 @@
 
             <!-- Settings Section -->
             <section id="settingsSection" class="hidden">
-                <div class="form-section">
+                <div class="form-section settings-section">
                     <h3>⚙️ Account Settings</h3>
+
                     <div class="form-grid">
-                        <div class="form-group">
-                            <label for="language">Language</label>
-                            <select id="language" style="background: #121212; border: 2px solid #333; border-radius: 8px; padding: 0.75rem; color: #ffffff; font-size: 1rem;">
-                                <option value="en">English</option>
-                                <option value="es">Spanish</option>
-                                <option value="fr">French</option>
-                                <option value="de">German</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="timezone">Timezone</label>
-                            <select id="timezone" style="background: #121212; border: 2px solid #333; border-radius: 8px; padding: 0.75rem; color: #ffffff; font-size: 1rem;">
-                                <option value="EST">Eastern Time</option>
-                                <option value="PST">Pacific Time</option>
-                                <option value="GMT">Greenwich Mean Time</option>
-                                <option value="CET">Central European Time</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label style="display: flex; align-items: center; gap: 0.5rem;">
-                                <input type="checkbox" id="notifications" checked style="accent-color: #1DB954;">
-                                Email Notifications
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label style="display: flex; align-items: center; gap: 0.5rem;">
-                                <input type="checkbox" id="twoFactor" style="accent-color: #1DB954;">
-                                Two-Factor Authentication
-                            </label>
-                        </div>
+                    <div class="form-group">
+                        <label for="language">Language</label>
+                        <select id="language" class="custom-select">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="mr">Marathi</option>
+                            <option value="bn">Bengali</option>
+                            <option value="ta">Tamil</option>
+                            <option value="te">Telugu</option>
+                            <option value="kn">Kannada</option>
+                            <option value="gu">Gujarati</option>
+                            <option value="ml">Malayalam</option>
+                            <option value="pa">Punjabi</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+
+                        </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="timezone">Timezone</label>
+                        <select id="timezone" class="custom-select">
+                            <option value="IST">India Standard Time (IST)</option>
+                            <option value="EST">Eastern Time</option>
+                            <option value="PST">Pacific Time</option>
+                            <option value="GMT">Greenwich Mean Time</option>
+                            <option value="CET">Central European Time</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group toggle-group">
+                        <label for="notifications">
+                        <input type="checkbox" id="notifications" checked />
+                        <span>Email Notifications</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group toggle-group">
+                        <label for="twoFactor">
+                        <input type="checkbox" id="twoFactor" />
+                        <span>Two-Factor Authentication</span>
+                        </label>
+                    </div>
+                    </div>
+
                     <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="saveSettings()">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
-                            </svg>
-                            Save Settings
-                        </button>
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
+                        />
+                        </svg>
+                        Save Settings
+                    </button>
                     </div>
                 </div>
             </section>
+
         </main>
     </div>
 
     <script src={% static "js/profile.js" %}></script>
+     <!-- <script src="/static/js/profile.js"></script> -->
 </body>
 </html>
